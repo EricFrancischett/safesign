@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:safesign_app/theme/colors_app.dart';
-import 'package:safesign_app/theme/fonts_app.dart';
+import 'package:safesign_app/core/theme/colors_app.dart';
+import 'package:safesign_app/core/theme/fonts_app.dart';
 
 class MainButtom extends StatelessWidget {
   final String text;
@@ -21,7 +21,6 @@ class MainButtom extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Container(
-          width: 350,
           height: 50,
           alignment: Alignment.center,
           child: Text(

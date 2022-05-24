@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:safesign_app/theme/colors_app.dart';
+import 'package:safesign_app/core/theme/colors_app.dart';
+import 'package:safesign_app/core/widgets/main_textfield.dart';
 import 'package:safesign_app/widgets/custom_appbar.dart';
-import 'package:safesign_app/widgets/main_buttom.dart';
-import 'package:safesign_app/widgets/main_textfield.dart';
-
-import 'package:safesign_app/widgets/return_button.dart';
+import 'features/home/view/widgets/custom_drawer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -50,9 +49,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
       appBar: const CustomAppBar(),
+      endDrawer: const CustomDrawer(firstName: "Eric", lastName: "Francischett", id: "1988069"),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+
           children: <Widget>[
             MainTextField(
               textController: emailController,
