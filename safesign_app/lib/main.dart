@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:safesign_app/widgets/return_button.dart';
 
 void main() {
@@ -47,9 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            ReturnButton()
-          ],
+          children: const <Widget>[ReturnButton()],
         ),
       ),
       floatingActionButton: FloatingActionButton(

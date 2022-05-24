@@ -7,4 +7,6 @@ static TextStyle mainFontText24 = GoogleFonts.workSans(fontSize: 24);
 static TextStyle mainFontText16 = GoogleFonts.workSans(fontSize: 16);
 static TextStyle mainFontText20 = GoogleFonts.workSans(fontSize: 20);
 
+
 }
+
