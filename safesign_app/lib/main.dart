@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:safesign_app/home/view/widgets/custom_drawer.dart';
 import 'package:safesign_app/theme/colors_app.dart';
-
-import 'package:safesign_app/theme/colors_app.dart';
-import 'package:safesign_app/widgets/main_buttom.dart';
-import 'package:safesign_app/widgets/main_textfield.dart';
-
-
-import 'package:safesign_app/widgets/return_button.dart';
+import 'package:safesign_app/core/widgets/main_textfield.dart';
+import 'features/home/view/widgets/custom_drawer.dart';
 
 void main() {
   runApp(const MyApp());
