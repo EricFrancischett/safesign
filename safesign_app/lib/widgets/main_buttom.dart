@@ -21,7 +21,6 @@ class MainButtom extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         child: Container(
-          width: 350,
           height: 50,
           alignment: Alignment.center,
           child: Text(
