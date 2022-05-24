@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safesign_app/theme/colors_app.dart';
+import 'package:safesign_app/core/theme/colors_app.dart';
 
 class ReturnButton extends StatelessWidget {
   const ReturnButton({Key? key}) : super(key: key);
