@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:safesign_app/home/view/widgets/custom_drawer.dart';
 import 'package:safesign_app/theme/colors_app.dart';
 
+import 'package:safesign_app/theme/colors_app.dart';
+import 'package:safesign_app/widgets/main_buttom.dart';
+import 'package:safesign_app/widgets/main_textfield.dart';
+
+
 import 'package:safesign_app/widgets/return_button.dart';
 
 void main() {
@@ -44,17 +49,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
+
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
       endDrawer: const CustomDrawer(firstName: "Eric", lastName: "Francischett", id: "1988069"),
+
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
 
+          children: <Widget>[
+            MainTextField(
+              textController: emailController,
+              labelText: 'Email',
+              choosedIcon: Icon(Icons.lock, color: ColorsApp.appBlue,),
+            )
           ],
         ),
       ),
