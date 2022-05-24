@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safesign_app/theme/colors_app.dart';
+import 'package:safesign_app/widgets/custom_appbar.dart';
 import 'package:safesign_app/widgets/main_buttom.dart';
 import 'package:safesign_app/widgets/main_textfield.dart';
 
@@ -48,9 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: const CustomAppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
