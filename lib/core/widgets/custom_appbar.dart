@@ -28,12 +28,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Scaffold.of(context).openEndDrawer();
+          },
           icon: Icon(
             Icons.account_circle_rounded,
             color: ColorsApp.appLightGrey,
             size: 36,
           ),
+        ),
+        const SizedBox(
+          width: 8,
         )
       ],
     );
