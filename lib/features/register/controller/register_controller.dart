@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/models/user_model.dart';
 part 'register_controller.g.dart';
 
+
 class RegisterController = _RegisterControllerBase with _$RegisterController;
 
 abstract class _RegisterControllerBase with Store {
@@ -37,4 +38,23 @@ abstract class _RegisterControllerBase with Store {
 
   @computed
   bool get isEmailValid => email.contains('@') && email.contains('.com');
+
+  @observable
+  String password = '';
+
+  @action
+  void changePassword(String newValue) => password = newValue;
+
+  @computed
+  bool get isPasswordValid => password.length >= 6 && password.length <= 12;
+
+  @observable
+  String passwordConfirmation = '';
+
+  @action
+  void changePasswordConfirmation(String newValue) =>
+      passwordConfirmation = newValue;
+
+  @computed
+  bool get isPasswordConfirmationValid => passwordConfirmation == password;
 }
