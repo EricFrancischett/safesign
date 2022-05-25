@@ -1,15 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobx/mobx.dart';
-import '../../../core/constants/api_routes.dart';
 import '../../../core/generics/resource.dart';
 import '../../../core/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  final _dio = Dio();
   final _hive = Hive.box<String>('credentials');
 
   @observable
@@ -43,16 +41,20 @@ abstract class _LoginControllerBase with Store {
   bool get areCredentialsValid => isEmailValid && isPasswordValid;
 
   @action
-  Future<Resource<void, String>> loginUser() async {
+  Future<Resource<UserCredential, String>> loginUser() async {
     try {
-      final result = await _dio.post(ApiRoutes.loginRoute,
-          data: {"email": email, "password": password});
-      user = Resource.success(data: UserModel.fromMap(result.data));
-      await _hive.put('token', user.data!.token!);
-      return user;
-    } on DioError catch (e) {
-      user = Resource.failed(error: e.response.toString());
-      return user;
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+          return Resource.success(data: credential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return Resource.failed(error: 'No user found for that email.');
+        
+      } else if (e.code == 'wrong-password') {
+        return Resource.failed(error: 'Wrong password provided for that user.');
+      } else {
+        return Resource.failed(error: 'Error, please try again!');
+      }
     }
   }
 

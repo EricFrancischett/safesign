@@ -4,7 +4,7 @@ import 'package:safesign_app/core/theme/fonts_app.dart';
 
 class MainButtom extends StatelessWidget {
   final String text;
-  final Future Function()? onPressed;
+  final Function()? onPressed;
 
   const MainButtom({Key? key, required this.text, required this.onPressed})
       : super(key: key);
