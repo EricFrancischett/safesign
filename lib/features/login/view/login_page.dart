@@ -5,6 +5,7 @@ import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/main_buttom.dart';
 import 'package:safesign_app/core/widgets/main_textfield.dart';
 import 'package:safesign_app/features/login/view/widgets/custom_error_dialog.dart';
+import 'package:safesign_app/features/register/view/register_page.dart';
 import '../../../core/generics/resource.dart';
 import '../../home/view/home_page.dart';
 import '../controller/login_controller.dart';
@@ -87,7 +88,12 @@ class LoginPage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        //Navigate to RegisterPage
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(),
+                          ),
+                        );
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

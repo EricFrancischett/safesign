@@ -52,6 +52,13 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
               () => super.isPasswordConfirmationValid,
               name: '_RegisterControllerBase.isPasswordConfirmationValid'))
           .value;
+  Computed<bool>? _$allCredentialIsValidComputed;
+
+  @override
+  bool get allCredentialIsValid => (_$allCredentialIsValidComputed ??=
+          Computed<bool>(() => super.allCredentialIsValid,
+              name: '_RegisterControllerBase.allCredentialIsValid'))
+      .value;
 
   late final _$firstNameAtom =
       Atom(name: '_RegisterControllerBase.firstName', context: context);
@@ -85,19 +92,19 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     });
   }
 
-  late final _$idAtom =
-      Atom(name: '_RegisterControllerBase.id', context: context);
+  late final _$pinAtom =
+      Atom(name: '_RegisterControllerBase.pin', context: context);
 
   @override
-  String get id {
-    _$idAtom.reportRead();
-    return super.id;
+  String get pin {
+    _$pinAtom.reportRead();
+    return super.pin;
   }
 
   @override
-  set id(String value) {
-    _$idAtom.reportWrite(value, super.id, () {
-      super.id = value;
+  set pin(String value) {
+    _$pinAtom.reportWrite(value, super.pin, () {
+      super.pin = value;
     });
   }
 
@@ -150,6 +157,32 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     });
   }
 
+  late final _$isButtonAtLoadingStatusAtom = Atom(
+      name: '_RegisterControllerBase.isButtonAtLoadingStatus',
+      context: context);
+
+  @override
+  bool get isButtonAtLoadingStatus {
+    _$isButtonAtLoadingStatusAtom.reportRead();
+    return super.isButtonAtLoadingStatus;
+  }
+
+  @override
+  set isButtonAtLoadingStatus(bool value) {
+    _$isButtonAtLoadingStatusAtom
+        .reportWrite(value, super.isButtonAtLoadingStatus, () {
+      super.isButtonAtLoadingStatus = value;
+    });
+  }
+
+  late final _$registerUserAsyncAction =
+      AsyncAction('_RegisterControllerBase.registerUser', context: context);
+
+  @override
+  Future<Resource<UserCredential, String>> registerUser() {
+    return _$registerUserAsyncAction.run(() => super.registerUser());
+  }
+
   late final _$_RegisterControllerBaseActionController =
       ActionController(name: '_RegisterControllerBase', context: context);
 
@@ -176,11 +209,11 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   }
 
   @override
-  void changeId(String newValue) {
+  void changePin(String newValue) {
     final _$actionInfo = _$_RegisterControllerBaseActionController.startAction(
-        name: '_RegisterControllerBase.changeId');
+        name: '_RegisterControllerBase.changePin');
     try {
-      return super.changeId(newValue);
+      return super.changePin(newValue);
     } finally {
       _$_RegisterControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -220,20 +253,33 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   }
 
   @override
+  void setButtonToLoadingStatus() {
+    final _$actionInfo = _$_RegisterControllerBaseActionController.startAction(
+        name: '_RegisterControllerBase.setButtonToLoadingStatus');
+    try {
+      return super.setButtonToLoadingStatus();
+    } finally {
+      _$_RegisterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 firstName: ${firstName},
 lastName: ${lastName},
-id: ${id},
+pin: ${pin},
 email: ${email},
 password: ${password},
 passwordConfirmation: ${passwordConfirmation},
+isButtonAtLoadingStatus: ${isButtonAtLoadingStatus},
 isFirstNameValid: ${isFirstNameValid},
 isFirstLastValid: ${isFirstLastValid},
 isIdValid: ${isIdValid},
 isEmailValid: ${isEmailValid},
 isPasswordValid: ${isPasswordValid},
-isPasswordConfirmationValid: ${isPasswordConfirmationValid}
+isPasswordConfirmationValid: ${isPasswordConfirmationValid},
+allCredentialIsValid: ${allCredentialIsValid}
     ''';
   }
 }
