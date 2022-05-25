@@ -1,7 +1,12 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mobx/mobx.dart';
+import 'package:safesign_app/core/generics/resource.dart';
 import 'package:safesign_app/core/models/user_model.dart';
 part 'register_controller.g.dart';
-
 
 class RegisterController = _RegisterControllerBase with _$RegisterController;
 
@@ -23,12 +28,12 @@ abstract class _RegisterControllerBase with Store {
   bool get isFirstLastValid => lastName.isNotEmpty;
 
   @observable
-  String id = '';
+  String pin = '';
   @action
-  void changeId(String newValue) => id = newValue;
+  void changePin(String newValue) => pin = newValue;
 
   @computed
-  bool get isIdValid => id.isNotEmpty && id.length == 4;
+  bool get isIdValid => pin.isNotEmpty && pin.length == 4;
 
   @observable
   String email = '';
@@ -57,4 +62,45 @@ abstract class _RegisterControllerBase with Store {
 
   @computed
   bool get isPasswordConfirmationValid => passwordConfirmation == password;
+
+  @computed
+  bool get allCredentialIsValid =>
+      isPasswordValid && isPasswordConfirmationValid;
+
+  @observable
+  bool isButtonAtLoadingStatus = false;
+
+  @action
+  void setButtonToLoadingStatus() => isButtonAtLoadingStatus = true;
+
+  @action
+  Future<Resource<UserCredential, String>> registerUser() async {
+    try {
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password,
+      );
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(credential.user!.uid)
+          .set({
+        'id': credential.user!.uid,
+        'email': email,
+        'firstname': firstName,
+        'lastname': lastName,
+        'pin': pin,
+      });
+
+      return Resource.success(data: credential);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return Resource.failed(error: "The password provided is too weak.");
+      } else if (e.code == 'email-already-in-use') {
+        return Resource.failed(
+            error: 'The account already exists for that email.');
+      } else {
+        return Resource.failed(error: "Error, try again");
+      }
+    }
+  }
 }

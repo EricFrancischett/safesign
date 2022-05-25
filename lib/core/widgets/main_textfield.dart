@@ -8,6 +8,8 @@ class MainTextField extends StatefulWidget {
   final Icon? choosedIcon;
   final bool isObscure;
   final Function(String)? onChanged;
+  final int? maxLength;
+  final TextInputType? keyboardType;
 
   const MainTextField({
     Key? key,
@@ -16,6 +18,8 @@ class MainTextField extends StatefulWidget {
     this.isObscure = false,
     this.onChanged,
     this.suffixIcon,
+    this.maxLength,
+    this.keyboardType
   }) : super(key: key);
 
   @override
@@ -26,17 +30,18 @@ class _MainTextFieldState extends State<MainTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: widget.keyboardType,
+      maxLength: widget.maxLength,
       onChanged: widget.onChanged,
-      style: FontsApp.mainFontText20.copyWith(color: ColorsApp.appLightGrey),
+      style: FontsApp.mainFontText16.copyWith(color: ColorsApp.appLightGrey),
       cursorColor: ColorsApp.appBlue,
       obscureText: widget.isObscure,
       decoration: InputDecoration(
+        counter: const Offstage(),
         suffixIcon: widget.suffixIcon,
         prefixIcon: widget.choosedIcon,
         labelText: widget.labelText,
-        labelStyle: TextStyle(
-          color: ColorsApp.appBlue,
-        ),
+        labelStyle: FontsApp.mainFontText16.copyWith(color: ColorsApp.appBlue),
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(
             Radius.circular(
