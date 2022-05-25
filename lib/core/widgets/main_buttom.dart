@@ -3,10 +3,10 @@ import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/theme/fonts_app.dart';
 
 class MainButtom extends StatelessWidget {
-  final String text;
-  final Future Function()? onPressed;
+  final Widget child;
+  final Function()? onPressed;
 
-  const MainButtom({Key? key, required this.text, required this.onPressed})
+  const MainButtom({Key? key, required this.child, required this.onPressed})
       : super(key: key);
 
   @override
@@ -22,11 +22,7 @@ class MainButtom extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: FontsApp.mainFontText24.copyWith(
-              fontWeight: FontWeight.w600, color: ColorsApp.appLightGrey),
-        ),
+        child: child,
       ),
     );
   }

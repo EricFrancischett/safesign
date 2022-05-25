@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:lottie/lottie.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/main_buttom.dart';
@@ -113,40 +114,61 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    Observer(builder: (_) {
-                      return MainButtom(
-                        text: "Log In",
-                        onPressed: _controller.areCredentialsValid
-                            ? () async {
-                                _controller.setButtonToLoadingStatus();
-                                final resource = await _controller.loginUser();
-                                if (resource.hasError) {
-                                  await showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return CustomErrorDialog(
-                                              errorMessage:
-                                                  resource.error.toString(),
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                            );
-                                          })
-                                      .then((_) => _controller
-                                          .isButtonAtLoadingStatus = false);
+                    Observer(
+                      builder: (_) {
+                        bool isLoading = _controller.isButtonAtLoadingStatus;
+                        return MainButtom(
+                          onPressed: _controller.areCredentialsValid
+                              ? () async {
+                                  _controller.setButtonToLoadingStatus();
+                                  final resource =
+                                      await _controller.loginUser();
+                                  if (resource.hasError) {
+                                    await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return CustomErrorDialog(
+                                                errorMessage:
+                                                    resource.error.toString(),
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                              );
+                                            })
+                                        .then((_) => _controller
+                                            .isButtonAtLoadingStatus = false);
+                                  }
+                                  if (resource.status == Status.success) {
+                                    // ignore: use_build_context_synchronously
+                                    await Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const HomePage(),
+                                      ),
+                                    );
+                                  }
                                 }
-                                if (resource.status == Status.success) {
-                                  // ignore: use_build_context_synchronously
-                                  await Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const HomePage(),
-                                    ),
-                                  );
-                                }
-                              }
-                            : null,
-                      );
-                    }),
+                              : null,
+                          child: isLoading
+                              ? SizedBox(
+                                width: 100,
+                                height: 100,
+                                child: Lottie.network(
+                                  'https://assets2.lottiefiles.com/packages/lf20_2tvot70g.json',
+                                  alignment: Alignment.center,
+                                  fit: BoxFit.fill,
+                                ),
+                              )
+                              : Text(
+                                  _controller.areCredentialsValid
+                                      ? "Log In"
+                                      : "Invalid Credentials",
+                                  style: FontsApp.mainFontText24.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: ColorsApp.appLightGrey),
+                                ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ],
