@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobx/mobx.dart';
 import '../../../core/generics/resource.dart';
@@ -41,15 +42,17 @@ abstract class _LoginControllerBase with Store {
   bool get areCredentialsValid => isEmailValid && isPasswordValid;
 
   @action
-  Future<Resource<UserCredential, String>> loginUser() async {
+  Future<Resource<UserModel, String>> loginUser() async {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-          return Resource.success(data: credential);
+          final document = await FirebaseFirestore.instance.collection("users").doc(credential.user!.uid).get();
+          final currentUser = UserModel.fromMap(document.data()!);
+          return Resource.success(data: currentUser);
+          
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return Resource.failed(error: 'No user found for that email.');
-        
       } else if (e.code == 'wrong-password') {
         return Resource.failed(error: 'Wrong password provided for that user.');
       } else {
