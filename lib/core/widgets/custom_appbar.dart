@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../theme/colors_app.dart';
 
 class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
@@ -10,7 +7,7 @@ class CustomAppBar extends StatefulWidget with PreferredSizeWidget {
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
   @override
-  Size get preferredSize => const Size.fromHeight(50);
+  Size get preferredSize => const Size.fromHeight(60);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
@@ -20,10 +17,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
       centerTitle: false,
       backgroundColor: ColorsApp.appGrey,
       title: SizedBox(
-        child: Image.asset(
-          'image/NewLogoSafeSign.png',
-          height: 100,
-          width: 100,
+        child: Hero(
+          tag: "logo",
+          child: Image.asset(
+            'image/NewLogoSafeSign.png',
+            height: 100,
+            width: 100,
+          ),
         ),
       ),
       actions: [

@@ -10,4 +10,4 @@ class Resource<T, E> {
   Resource.failed({this.data, this.error, this.status = Status.failed});
 }
 
-enum Status { loading, success, failed }
+enum Status {loading, success, failed}

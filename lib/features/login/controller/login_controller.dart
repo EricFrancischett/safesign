@@ -1,0 +1,65 @@
+import 'package:dio/dio.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mobx/mobx.dart';
+import '../../../core/constants/api_routes.dart';
+import '../../../core/generics/resource.dart';
+import '../../../core/models/user_model.dart';
+part 'login_controller.g.dart';
+
+class LoginController = _LoginControllerBase with _$LoginController;
+
+abstract class _LoginControllerBase with Store {
+  final _dio = Dio();
+  final _hive = Hive.box<String>('credentials');
+
+  @observable
+  String email = '';
+
+  @action
+  void changeEmail(String newValue) => email = newValue;
+
+  @observable
+  String password = '';
+
+  @action
+  void changePassword(String newValue) => password = newValue;
+
+  @observable
+  Resource<UserModel, String> user = Resource.loading();
+
+  @observable
+  bool isPasswordVisible = false;
+
+  @observable
+  bool isButtonAtLoadingStatus = false;
+
+  @action
+  void setButtonToLoadingStatus() => isButtonAtLoadingStatus = true;
+
+  @action
+  void changePasswordVisibility() => isPasswordVisible = !isPasswordVisible;
+
+  @computed
+  bool get areCredentialsValid => isEmailValid && isPasswordValid;
+
+  @action
+  Future<Resource<void, String>> loginUser() async {
+    try {
+      final result = await _dio.post(ApiRoutes.loginRoute,
+          data: {"email": email, "password": password});
+      user = Resource.success(data: UserModel.fromMap(result.data));
+      await _hive.put('token', user.data!.token!);
+      return user;
+    } on DioError catch (e) {
+      user = Resource.failed(error: e.response.toString());
+      return user;
+    }
+  }
+
+  @computed
+  bool get isEmailValid =>
+      email.isNotEmpty && email.contains('@') && email.contains(".com");
+
+  @computed
+  bool get isPasswordValid => password.length >= 6 && password.length <= 12;
+}
