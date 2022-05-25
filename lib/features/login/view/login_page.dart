@@ -139,24 +139,24 @@ class LoginPage extends StatelessWidget {
                                   }
                                   if (resource.status == Status.success) {
                                     // ignore: use_build_context_synchronously
-                                    await Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const HomePage(),
-                                      ),
-                                    );
+                                    // await Navigator.pushReplacement(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => const HomePage(),
+                                    //   ),
+                                    // );
+
                                   }
                                 }
                               : null,
                           child: isLoading
-                              ? SizedBox(
-                                width: 100,
-                                height: 100,
-                                child: Lottie.network(
-                                  'https://assets2.lottiefiles.com/packages/lf20_2tvot70g.json',
-                                  alignment: Alignment.center,
-                                  fit: BoxFit.fill,
-                                ),
+                              ? Lottie.network(
+                                'https://assets2.lottiefiles.com/packages/lf20_2tvot70g.json',
+                                height: 64,
+                                width: 64,
+                                alignment: Alignment.center,
+                                fit: BoxFit.fill,
+
                               )
                               : Text(
                                   _controller.areCredentialsValid

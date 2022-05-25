@@ -6,33 +6,34 @@ class UserModel {
   String? password;
   String? firstName;
   String? lastName;
-  String? token;
+  String? pin;
 
-  UserModel(
-      {this.id,
-      this.email,
-      this.firstName,
-      this.lastName,
-      this.password,
-      this.token});
+  UserModel({
+    this.id,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.password,
+    this.pin,
+  });
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-        id: map[UserModelKeys.id],
-        email: map[UserModelKeys.email],
-        password: map[UserModelKeys.password],
-        lastName: map[UserModelKeys.lastName],
-        firstName: map[UserModelKeys.firstName],
-        token: map[UserModelKeys.token]);
+      id: map[UserModelKeys.id],
+      email: map[UserModelKeys.email],
+      lastName: map[UserModelKeys.lastName],
+      firstName: map[UserModelKeys.firstName],
+      pin: map[UserModelKeys.pin],
+    );
   }
 
   Map<String, dynamic> toMap(UserModel user) {
     return {
       UserModelKeys.id: user.id,
       UserModelKeys.email: user.email,
-      UserModelKeys.password: user.password,
       UserModelKeys.lastName: user.lastName,
       UserModelKeys.firstName: user.firstName,
+      UserModelKeys.pin: user.pin
     };
   }
 }
