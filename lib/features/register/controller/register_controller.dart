@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -76,9 +74,10 @@ abstract class _RegisterControllerBase with Store {
   void setButtonToLoadingStatus() => isButtonAtLoadingStatus = true;
 
   @action
-  Future<Resource<UserCredential, String>> registerUser() async {
+  Future<Resource<UserModel, String>> registerUser() async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password,
       );
@@ -92,8 +91,13 @@ abstract class _RegisterControllerBase with Store {
         UserModelKeys.lastName: lastName,
         UserModelKeys.pin: pin,
       });
-
-      return Resource.success(data: credential);
+      final document = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(credential.user!.uid)
+          .get();
+      final currentUser = UserModel.fromMap(document.data()!);
+      
+      return Resource.success(data: currentUser);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return Resource.failed(error: "The password provided is too weak.");
