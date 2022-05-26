@@ -150,8 +150,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       Observer(builder: (_) {
                         return MainButtom(
-                            text: 'Register',
-                            onPressed: _controller.allCredentialIsValid
+                          onPressed: _controller.allCredentialIsValid
                                 ? () async {
                                     _controller.setButtonToLoadingStatus();
                                     final resource = await _controller.registerUser();
@@ -179,7 +178,10 @@ class RegisterPage extends StatelessWidget {
                                       );
                                     }
                                   }
-                                : null);
+                                : null,
+                          child: Text('Register', style: FontsApp.mainFontText24.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: ColorsApp.appLightGrey),));
                       })
                     ],
                   ),

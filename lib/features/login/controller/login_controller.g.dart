@@ -116,7 +116,7 @@ mixin _$LoginController on _LoginControllerBase, Store {
       AsyncAction('_LoginControllerBase.loginUser', context: context);
 
   @override
-  Future<Resource<UserCredential, String>> loginUser() {
+  Future<Resource<UserModel, String>> loginUser() {
     return _$loginUserAsyncAction.run(() => super.loginUser());
   }
 

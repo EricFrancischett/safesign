@@ -3,7 +3,6 @@ import 'package:safesign_app/core/models/user_model_keys.dart';
 class UserModel {
   String? id;
   String? email;
-  String? password;
   String? firstName;
   String? lastName;
   String? pin;
@@ -13,7 +12,6 @@ class UserModel {
     this.email,
     this.firstName,
     this.lastName,
-    this.password,
     this.pin,
   });
 
