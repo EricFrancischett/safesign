@@ -34,7 +34,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           icon: Icon(
             Icons.account_circle_rounded,
             color: ColorsApp.appLightGrey,
-            size: 36,
+            size: 30,
           ),
         ),
         const SizedBox(
