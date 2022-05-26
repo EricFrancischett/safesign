@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/generics/resource.dart';
 import 'package:safesign_app/core/models/user_model.dart';
-
 import '../../../core/models/user_model_keys.dart';
 part 'register_controller.g.dart';
 
@@ -91,6 +90,9 @@ abstract class _RegisterControllerBase with Store {
         UserModelKeys.firstName: firstName,
         UserModelKeys.lastName: lastName,
         UserModelKeys.pin: pin,
+        UserModelKeys.documentsToSign: [],
+        UserModelKeys.pendingDocuments: [],
+        UserModelKeys.availableDocuments: [],
       });
 
       return Resource.success(data: credential);
