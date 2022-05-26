@@ -179,7 +179,7 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
       AsyncAction('_RegisterControllerBase.registerUser', context: context);
 
   @override
-  Future<Resource<UserCredential, String>> registerUser() {
+  Future<Resource<UserModel, String>> registerUser() {
     return _$registerUserAsyncAction.run(() => super.registerUser());
   }
 
