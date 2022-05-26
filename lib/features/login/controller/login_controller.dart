@@ -49,7 +49,6 @@ abstract class _LoginControllerBase with Store {
           final document = await FirebaseFirestore.instance.collection("users").doc(credential.user!.uid).get();
           final currentUser = UserModel.fromMap(document.data()!);
           return Resource.success(data: currentUser);
-          
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return Resource.failed(error: 'No user found for that email.');
