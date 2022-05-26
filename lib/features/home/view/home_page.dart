@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
 import 'package:safesign_app/features/home/widgets/custom_drawer.dart';
 import 'package:safesign_app/features/home/widgets/custom_tile.dart';
+
 import '../../../core/models/user_model.dart';
 import '../controller/home_controller.dart';
 
@@ -31,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
       endDrawer: CustomDrawer(
+
           firstName: widget.user.firstName!,
           lastName: widget.user.lastName!,
           id: "1988069"),
@@ -60,6 +63,7 @@ class _HomePageState extends State<HomePage> {
             ],
           );
         }),
+
       ),
     );
   }

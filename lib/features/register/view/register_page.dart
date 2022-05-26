@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/generics/resource.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
@@ -9,6 +10,7 @@ import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/main_buttom.dart';
 import 'package:safesign_app/core/widgets/main_textfield.dart';
 import 'package:safesign_app/core/widgets/return_button.dart';
+import 'package:safesign_app/features/home/view/home_page.dart';
 import 'package:safesign_app/features/login/view/login_page.dart';
 import 'package:safesign_app/features/login/view/widgets/custom_error_dialog.dart';
 import 'package:safesign_app/features/register/controller/register_controller.dart';
@@ -30,28 +32,30 @@ class RegisterPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(24, 48, 24, 48),
               child: Column(
                 children: [
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    const ReturnButton(),
+                      const ReturnButton(),
                       Expanded(
                         child: Hero(
                           tag: 'logo',
                           child: Image.asset(
                             'image/NewLogoSafeSign.png',
                             height: 70,
-                            width: 20,
+                            
                           ),
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                     
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,39 +153,56 @@ class RegisterPage extends StatelessWidget {
                         ],
                       ),
                       Observer(builder: (_) {
+                        bool isLoading = _controller.isButtonAtLoadingStatus;
                         return MainButtom(
                           onPressed: _controller.allCredentialIsValid
-                                ? () async {
-                                    _controller.setButtonToLoadingStatus();
-                                    final resource = await _controller.registerUser();
-                                    if (resource.hasError) {
-                                      await showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return CustomErrorDialog(
-                                                  errorMessage:
-                                                      resource.error.toString(),
-                                                  onPressed: () =>
-                                                      Navigator.pop(context),
-                                                );
-                                              })
-                                          .then((_) => _controller
-                                              .isButtonAtLoadingStatus = false);
-                                    }
-                                    if (resource.status == Status.success) {
-                                      // ignore: use_build_context_synchronously
-                                      await Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginPage(),
-                                        ),
-                                      );
-                                    }
+                              ? () async {
+                                  _controller.setButtonToLoadingStatus();
+                                  final resource =
+                                      await _controller.registerUser();
+                                  if (resource.hasError) {
+                                    await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return CustomErrorDialog(
+                                                errorMessage:
+                                                    resource.error.toString(),
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                              );
+                                            })
+                                        .then((_) => _controller
+                                            .isButtonAtLoadingStatus = false);
                                   }
-                                : null,
-                          child: Text('Register', style: FontsApp.mainFontText24.copyWith(
+                                  if (resource.status == Status.success) {
+                                    // ignore: use_build_context_synchronously
+                                    await Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomePage(user: resource.data!),
+                                      ),
+                                    );
+                                  }
+                                }
+                              : null,
+                          child: isLoading
+                              ? Lottie.network(
+                                  'https://assets2.lottiefiles.com/packages/lf20_2tvot70g.json',
+                                  height: 64,
+                                  width: 64,
+                                  alignment: Alignment.center,
+                                  fit: BoxFit.fill,
+                                )
+                              : Text(
+                                  _controller.allCredentialIsValid
+                                      ? "Register"
+                                      : "Invalid Inputs",
+                                  style: FontsApp.mainFontText24.copyWith(
                                       fontWeight: FontWeight.w600,
-                                      color: ColorsApp.appLightGrey),));
+                                      color: ColorsApp.appLightGrey),
+                                ),
+                        );
                       })
                     ],
                   ),
