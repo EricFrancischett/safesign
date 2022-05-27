@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
@@ -7,7 +6,8 @@ import 'package:safesign_app/core/widgets/custom_appbar.dart';
 import 'package:safesign_app/features/documents%20list%20page/view/documents_list_page.dart';
 import 'package:safesign_app/features/home/widgets/custom_drawer.dart';
 import 'package:safesign_app/features/home/widgets/custom_tile.dart';
-
+import 'package:safesign_app/features/home/widgets/fabio.dart';
+import 'package:safesign_app/features/upload/view/upload_page.dart';
 import '../../../core/models/user_model.dart';
 import '../controller/home_controller.dart';
 
@@ -33,6 +33,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Fabio(onPressed: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UploadPage(),
+          ),
+        );
+      }),
       backgroundColor: ColorsApp.appDarkGrey,
       endDrawer: CustomDrawer(
           firstName: widget.user.firstName!,
@@ -41,6 +49,7 @@ class _HomePageState extends State<HomePage> {
       appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
+
         child: Observer(builder: (_) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,6 +100,7 @@ class _HomePageState extends State<HomePage> {
             ],
           );
         }),
+
       ),
     );
   }
