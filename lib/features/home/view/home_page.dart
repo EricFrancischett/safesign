@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
+import 'package:safesign_app/features/documents%20list%20page/controller/constructor_pages.dart';
 import 'package:safesign_app/features/home/widgets/custom_drawer.dart';
 import 'package:safesign_app/features/home/widgets/custom_tile.dart';
 
@@ -33,7 +35,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
       endDrawer: CustomDrawer(
-
           firstName: widget.user.firstName!,
           lastName: widget.user.lastName!,
           id: "1988069"),
@@ -47,7 +48,9 @@ class _HomePageState extends State<HomePage> {
             children: [
               CustomTile(
                   number: _controller.documentstoSignLength,
-                  title: "Documents to sign"),
+                  title: "Documents to sign",
+                  action: ConstructorPages.toSign() ),
+                
               const SizedBox(
                 height: 16,
               ),
@@ -63,7 +66,6 @@ class _HomePageState extends State<HomePage> {
             ],
           );
         }),
-
       ),
     );
   }

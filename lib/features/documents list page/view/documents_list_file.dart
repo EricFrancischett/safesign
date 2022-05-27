@@ -4,6 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
 import 'package:safesign_app/features/documents%20list%20page/controler/documents_list_controller.dart';
+import 'package:safesign_app/features/documents%20list%20page/controller/constructor_pages.dart';
+
+import '../controller/documents_list_controller.dart';
 
 class DocumentsListPage extends StatefulWidget {
   final String titlePage;
@@ -16,6 +19,7 @@ class DocumentsListPage extends StatefulWidget {
 
 class _DocumentsListPageState extends State<DocumentsListPage> {
   final _controller = DocumentsListController();
+
 
   @override
   void initState() {
