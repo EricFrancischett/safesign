@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/models/user_model.dart';
+import 'package:safesign_app/core/models/user_model_keys.dart';
 part 'documents_list_controller.g.dart';
 
 class DocumentsListController = _DocumentsListControllerBase
@@ -9,44 +10,43 @@ class DocumentsListController = _DocumentsListControllerBase
 
 abstract class _DocumentsListControllerBase with Store {
   final user = FirebaseAuth.instance.currentUser!;
-  
-  
-@observable
-  List documentsToSign = [];
-@action
-  Future<void> getDocumentsToSign()async {
-  final document = await FirebaseFirestore.instance
-  .collection('users')
-  .doc(user.uid)
-  .get();
-  final currentUser = UserModel.fromMap(document.data()!);
-      documentsToSign = currentUser.documentsToSign!;
+
+  @observable
+  ObservableList generalDocmentsList = [].asObservable();
+
+  @observable
+  ObservableList documentsToSign = [].asObservable();
+
+  @observable
+  ObservableList pendingDocuments = [].asObservable();
+
+  @observable
+  ObservableList availableDocuments = [].asObservable();
+
+  @action
+  Future<void> fetchDocumentByStatus(String documentType) async {
+    final documentSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    final doc = documentSnapshot.data()![documentType];
+
+    switch (documentType) {
+      case UserModelKeys.documentsToSign:
+        documentsToSign = doc;
+        generalDocmentsList = documentsToSign;
+        break;
+      case UserModelKeys.availableDocuments:
+        availableDocuments = doc;
+        generalDocmentsList = availableDocuments;
+        break;
+      case UserModelKeys.pendingDocuments:
+        pendingDocuments = doc;
+        generalDocmentsList = pendingDocuments;
+        break;
+      default:
+        break;
+    }
   }
-
-@observable
-  List pendingDocuments = [];
-@action
-  Future<void> getPendingDocuments()async {
-  final document = await FirebaseFirestore.instance
-  .collection('users')
-  .doc(user.uid)
-  .get();
-  final currentUser = UserModel.fromMap(document.data()!);
-      pendingDocuments = currentUser.pendingDocuments!;
-  }
-
-
-@observable
-  List availableDocuments = [];
-@action
-  Future<void> getAvailableDocuments()async {
-
-  final document = await FirebaseFirestore.instance
-  .collection('users')
-  .doc(user.uid)
-  .get();
-  final currentUser = UserModel.fromMap(document.data()!);
-      availableDocuments = currentUser.availableDocuments!;
-  }
-
 }

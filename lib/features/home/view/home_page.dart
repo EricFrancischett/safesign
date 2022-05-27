@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
-import 'package:safesign_app/features/documents%20list%20page/controller/constructor_pages.dart';
+import 'package:safesign_app/features/documents%20list%20page/view/documents_list_page.dart';
 import 'package:safesign_app/features/home/widgets/custom_drawer.dart';
 import 'package:safesign_app/features/home/widgets/custom_tile.dart';
 
@@ -47,22 +47,47 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomTile(
-                  number: _controller.documentstoSignLength,
-                  title: "Documents to sign",
-                  action: ConstructorPages.toSign() ),
-                
+                number: _controller.documentstoSignLength,
+                title: "Documents to sign",
+                action: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DocumentsListPage.toSign(),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(
                 height: 16,
               ),
               CustomTile(
-                  number: _controller.pendingDocumentsLength,
-                  title: "Pending Documents"),
+                number: _controller.pendingDocumentsLength,
+                title: "Pending Documents",
+                action: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DocumentsListPage.pending(),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(
                 height: 16,
               ),
               CustomTile(
-                  number: _controller.availableDocumentsLength,
-                  title: "Available Documents"),
+                number: _controller.availableDocumentsLength,
+                title: "Available Documents",
+                action: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DocumentsListPage.available(),
+                    ),
+                  );
+                },
+              ),
             ],
           );
         }),
