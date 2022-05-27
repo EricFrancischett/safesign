@@ -7,7 +7,7 @@ import 'package:safesign_app/core/models/user_model_keys.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
-import 'package:safesign_app/features/documents%20list%20page/widget/custom_tile2.dart';
+import 'package:safesign_app/core/widgets/custom_button.dart';
 import 'package:safesign_app/features/home/controller/home_controller.dart';
 
 import '../controller/documents_list_controller.dart';
@@ -74,7 +74,7 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
               return ListView.builder(
                 itemCount: _controller.generalDocmentsList.length,
                 itemBuilder: (context, index) {
-                  return const CustomTile2(title: "Nome do Documento");
+                  return CustomButton(text: "", onPressed: (){});
                 },
               );
             })
