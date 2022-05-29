@@ -7,6 +7,7 @@ import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/main_buttom.dart';
 import 'package:safesign_app/core/widgets/main_textfield.dart';
 import 'package:safesign_app/core/widgets/return_button.dart';
+import 'package:safesign_app/features/upload/view/widgets/custom_inform_dialog.dart';
 import '../controller/upload_controller.dart';
 
 class UploadPage extends StatefulWidget {
@@ -48,38 +49,46 @@ class _UploadPageState extends State<UploadPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  DottedBorder(
-                    borderType: BorderType.RRect,
-                    color: ColorsApp.appBlue,
-                    strokeWidth: 3,
-                    radius: const Radius.circular(15),
-                    dashPattern: const [10, 5],
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 80, vertical: 40),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.insert_drive_file_rounded,
-                            color: ColorsApp.appBlue,
-                            size: 56,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "Click here to add a document",
-                            textAlign: TextAlign.center,
-                            style: FontsApp.mainFontText24.copyWith(
+                  InkWell(
+                      child: DottedBorder(
+                        borderType: BorderType.RRect,
+                        color: ColorsApp.appBlue,
+                        strokeWidth: 3,
+                        radius: const Radius.circular(15),
+                        dashPattern: const [10, 5],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 80, vertical: 40),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.insert_drive_file_rounded,
                                 color: ColorsApp.appBlue,
-                                decoration: TextDecoration.underline),
+                                size: 56,
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Observer(builder: (_) {
+                                return Text(
+                                  _controller.selectedFile.path.isNotEmpty
+                                      ? _controller.selectedFile.path
+                                      : "Click here to add a document",
+                                  textAlign: TextAlign.center,
+                                  style: FontsApp.mainFontText24.copyWith(
+                                      color: ColorsApp.appBlue,
+                                      decoration: TextDecoration.underline),
+                                );
+                              }),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
+                      onTap: () async {
+                        _controller.pickPdf();
+                      }),
                   const SizedBox(
                     height: 24,
                   ),
@@ -198,9 +207,26 @@ class _UploadPageState extends State<UploadPage> {
               Observer(builder: (_) {
                 bool isLoading = _controller.isButtonAtLoadingStatus;
                 return MainButtom(
-                  onPressed: _controller.areDocumentsInfoValid ? () {
-                    _controller.setButtonToLoadingStatus();
-                  } : null,
+                  onPressed: _controller.areDocumentsInfoValid
+                      ? () async {
+                          _controller.setButtonToLoadingStatus();
+                          await _controller.uploadPdf();
+                          await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomInforDialog(
+                                    errorMessage: "Upload Succesful",
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    });
+                              }).then(
+                            (_) async {
+                              _controller.isButtonAtLoadingStatus = false;
+                              Navigator.pop(context);
+                            },
+                          );
+                        }
+                      : null,
                   child: isLoading
                       ? Lottie.network(
                           'https://assets2.lottiefiles.com/packages/lf20_2tvot70g.json',

@@ -112,12 +112,44 @@ mixin _$UploadController on _UploadControllerBase, Store {
     });
   }
 
+  late final _$selectedFileAtom =
+      Atom(name: '_UploadControllerBase.selectedFile', context: context);
+
+  @override
+  File get selectedFile {
+    _$selectedFileAtom.reportRead();
+    return super.selectedFile;
+  }
+
+  @override
+  set selectedFile(File value) {
+    _$selectedFileAtom.reportWrite(value, super.selectedFile, () {
+      super.selectedFile = value;
+    });
+  }
+
   late final _$getUserModelListAsyncAction =
       AsyncAction('_UploadControllerBase.getUserModelList', context: context);
 
   @override
   Future<List<UserModel>> getUserModelList() {
     return _$getUserModelListAsyncAction.run(() => super.getUserModelList());
+  }
+
+  late final _$pickPdfAsyncAction =
+      AsyncAction('_UploadControllerBase.pickPdf', context: context);
+
+  @override
+  Future<void> pickPdf() {
+    return _$pickPdfAsyncAction.run(() => super.pickPdf());
+  }
+
+  late final _$uploadPdfAsyncAction =
+      AsyncAction('_UploadControllerBase.uploadPdf', context: context);
+
+  @override
+  Future<void> uploadPdf() {
+    return _$uploadPdfAsyncAction.run(() => super.uploadPdf());
   }
 
   late final _$_UploadControllerBaseActionController =
@@ -186,6 +218,7 @@ isTileExpanded: ${isTileExpanded},
 userList: ${userList},
 selectedUserList: ${selectedUserList},
 isButtonAtLoadingStatus: ${isButtonAtLoadingStatus},
+selectedFile: ${selectedFile},
 isDocumentNameValid: ${isDocumentNameValid},
 isPeopleInvolvedValid: ${isPeopleInvolvedValid},
 areDocumentsInfoValid: ${areDocumentsInfoValid}
