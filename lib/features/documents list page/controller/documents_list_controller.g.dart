@@ -14,13 +14,13 @@ mixin _$DocumentsListController on _DocumentsListControllerBase, Store {
       context: context);
 
   @override
-  ObservableList<dynamic> get generalDocmentsList {
+  ObservableList<DocModel> get generalDocmentsList {
     _$generalDocmentsListAtom.reportRead();
     return super.generalDocmentsList;
   }
 
   @override
-  set generalDocmentsList(ObservableList<dynamic> value) {
+  set generalDocmentsList(ObservableList<DocModel> value) {
     _$generalDocmentsListAtom.reportWrite(value, super.generalDocmentsList, () {
       super.generalDocmentsList = value;
     });
@@ -30,31 +30,15 @@ mixin _$DocumentsListController on _DocumentsListControllerBase, Store {
       name: '_DocumentsListControllerBase.documentsToSign', context: context);
 
   @override
-  ObservableList<dynamic> get documentsToSign {
+  ObservableList<DocModel> get documentsToSign {
     _$documentsToSignAtom.reportRead();
     return super.documentsToSign;
   }
 
   @override
-  set documentsToSign(ObservableList<dynamic> value) {
+  set documentsToSign(ObservableList<DocModel> value) {
     _$documentsToSignAtom.reportWrite(value, super.documentsToSign, () {
       super.documentsToSign = value;
-    });
-  }
-
-  late final _$pendingDocumentsAtom = Atom(
-      name: '_DocumentsListControllerBase.pendingDocuments', context: context);
-
-  @override
-  ObservableList<dynamic> get pendingDocuments {
-    _$pendingDocumentsAtom.reportRead();
-    return super.pendingDocuments;
-  }
-
-  @override
-  set pendingDocuments(ObservableList<dynamic> value) {
-    _$pendingDocumentsAtom.reportWrite(value, super.pendingDocuments, () {
-      super.pendingDocuments = value;
     });
   }
 
@@ -63,13 +47,13 @@ mixin _$DocumentsListController on _DocumentsListControllerBase, Store {
       context: context);
 
   @override
-  ObservableList<dynamic> get availableDocuments {
+  ObservableList<DocModel> get availableDocuments {
     _$availableDocumentsAtom.reportRead();
     return super.availableDocuments;
   }
 
   @override
-  set availableDocuments(ObservableList<dynamic> value) {
+  set availableDocuments(ObservableList<DocModel> value) {
     _$availableDocumentsAtom.reportWrite(value, super.availableDocuments, () {
       super.availableDocuments = value;
     });
@@ -90,7 +74,6 @@ mixin _$DocumentsListController on _DocumentsListControllerBase, Store {
     return '''
 generalDocmentsList: ${generalDocmentsList},
 documentsToSign: ${documentsToSign},
-pendingDocuments: ${pendingDocuments},
 availableDocuments: ${availableDocuments}
     ''';
   }

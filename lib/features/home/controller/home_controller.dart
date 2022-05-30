@@ -30,25 +30,6 @@ abstract class _HomeControllerBase with Store {
   }
 
   @observable
-  int pendingDocumentsLength = 0;
-
-  @action
-  Future<void> getPendingDocumentsLength() async {
-    final document = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(user.uid)
-        .collection(UserModelKeys.pendingDocuments)
-        .get();
-    final pendingDocsList =
-        document.docs.map((e) => UserModel.fromMap(e.data())).toList();
-    if (pendingDocsList.isNotEmpty) {
-      pendingDocumentsLength = pendingDocsList.length;
-    } else {
-      pendingDocumentsLength = 0;
-    }
-  }
-
-  @observable
   int availableDocumentsLength = 0;
 
   @action

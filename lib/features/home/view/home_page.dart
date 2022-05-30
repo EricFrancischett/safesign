@@ -53,7 +53,6 @@ class _HomePageState extends State<HomePage> {
         child: Observer(
           builder: (_) {
             _controller.getDocumentstoSignLength();
-            _controller.getPendingDocumentsLength();
             _controller.getAvailableDocumentsLength();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,21 +66,6 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const DocumentsListPage.toSign(),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                CustomTile(
-                  number: _controller.pendingDocumentsLength,
-                  title: "Pending Documents",
-                  action: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DocumentsListPage.pending(),
                       ),
                     );
                   },

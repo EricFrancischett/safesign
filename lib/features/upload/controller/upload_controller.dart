@@ -89,6 +89,10 @@ abstract class _UploadControllerBase with Store {
   @action
   Future<void> uploadPdf() async {
     try {
+      List<String>? selectedIdUserList;
+      for (var i = 0; i < selectedUserList.length; i++) {
+        selectedIdUserList?.add(selectedUserList[i].id!);
+      }
       String ref = "files/${user.uid}/$documentName.pdf";
       await FirebaseStorage.instance.ref(ref).putFile(selectedFile);
       final fileUrl =
@@ -103,6 +107,7 @@ abstract class _UploadControllerBase with Store {
           "url": fileUrl,
           "_id": documentName,
           "owner_id": user.uid,
+          "people_involved": FieldValue.arrayUnion([selectedIdUserList])
         },
       );
       for (var i = 0; i < selectedUserList.length; i++) {
@@ -112,9 +117,9 @@ abstract class _UploadControllerBase with Store {
             .collection(UserModelKeys.documentsToSign)
             .doc(documentName)
             .set({
-              "_id" : documentName,
-              "owner_id" : user.uid,
-              "url" : fileUrl,
+          "_id": documentName,
+          "owner_id": user.uid,
+          "url": fileUrl,
         });
       }
     } on FirebaseException catch (e) {
