@@ -88,9 +88,6 @@ abstract class _RegisterControllerBase with Store {
         UserModelKeys.firstName: firstName,
         UserModelKeys.lastName: lastName,
         UserModelKeys.pin: pin,
-        UserModelKeys.documentsToSign: [],
-        UserModelKeys.pendingDocuments: [],
-        UserModelKeys.availableDocuments: [],
       });
       final document = await FirebaseFirestore.instance
           .collection("users")

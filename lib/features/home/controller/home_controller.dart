@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
+import 'package:safesign_app/core/models/user_model_keys.dart';
 import '../../../core/models/user_model.dart';
 part 'home_controller.g.dart';
 
@@ -17,9 +18,15 @@ abstract class _HomeControllerBase with Store {
     final document = await FirebaseFirestore.instance
         .collection("users")
         .doc(user.uid)
+        .collection(UserModelKeys.documentsToSign)
         .get();
-    final currentUser = UserModel.fromMap(document.data()!);
-    documentstoSignLength = currentUser.documentsToSign!.length;
+    final docToSignList =
+        document.docs.map((e) => UserModel.fromMap(e.data())).toList();
+    if (docToSignList.isNotEmpty) {
+      documentstoSignLength = docToSignList.length;
+    } else {
+      documentstoSignLength = 0;
+    }
   }
 
   @observable
@@ -30,12 +37,18 @@ abstract class _HomeControllerBase with Store {
     final document = await FirebaseFirestore.instance
         .collection("users")
         .doc(user.uid)
+        .collection(UserModelKeys.pendingDocuments)
         .get();
-    final currentUser = UserModel.fromMap(document.data()!);
-    pendingDocumentsLength = currentUser.pendingDocuments!.length;
+    final pendingDocsList =
+        document.docs.map((e) => UserModel.fromMap(e.data())).toList();
+    if (pendingDocsList.isNotEmpty) {
+      pendingDocumentsLength = pendingDocsList.length;
+    } else {
+      pendingDocumentsLength = 0;
+    }
   }
 
-    @observable
+  @observable
   int availableDocumentsLength = 0;
 
   @action
@@ -43,8 +56,14 @@ abstract class _HomeControllerBase with Store {
     final document = await FirebaseFirestore.instance
         .collection("users")
         .doc(user.uid)
+        .collection(UserModelKeys.availableDocuments)
         .get();
-    final currentUser = UserModel.fromMap(document.data()!);
-    availableDocumentsLength = currentUser.availableDocuments!.length;
+    final availableDocsList =
+        document.docs.map((e) => UserModel.fromMap(e.data())).toList();
+    if (availableDocsList.isNotEmpty) {
+      availableDocumentsLength = availableDocsList.length;
+    } else {
+      availableDocumentsLength = 0;
+    }
   }
 }
