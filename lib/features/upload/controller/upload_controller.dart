@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mobx/mobx.dart';
-import 'package:safesign_app/features/upload/view/widgets/custom_inform_dialog.dart';
+import 'package:safesign_app/core/models/user_model_keys.dart';
 import '../../../core/models/user_model.dart';
 part 'upload_controller.g.dart';
 
@@ -109,10 +109,12 @@ abstract class _UploadControllerBase with Store {
         await FirebaseFirestore.instance
             .collection("users")
             .doc(selectedUserList[i].id)
-            .update({
-          "documents_to_sign": FieldValue.arrayUnion(
-            [documentName],
-          )
+            .collection(UserModelKeys.documentsToSign)
+            .doc(documentName)
+            .set({
+              "_id" : documentName,
+              "owner_id" : user.uid,
+              "url" : fileUrl,
         });
       }
     } on FirebaseException catch (e) {

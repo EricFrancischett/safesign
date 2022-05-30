@@ -15,7 +15,7 @@ import 'package:safesign_app/features/documents%20list%20page/view/documents_lis
 import 'package:safesign_app/features/home/widgets/custom_drawer.dart';
 import 'package:safesign_app/features/home/widgets/custom_tile.dart';
 import 'package:safesign_app/features/home/widgets/fabio.dart';
-import 'package:safesign_app/features/sign_pdf/sign_pdf_page.dart';
+import 'package:safesign_app/features/sign_pdf/view/sign_pdf_page.dart';
 import 'package:safesign_app/features/upload/view/upload_page.dart';
 import '../../../core/models/user_model.dart';
 import '../controller/home_controller.dart';
@@ -60,20 +60,6 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomTile(
-                  // action: () async {
-                  //   const url =
-                  //       "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf";
-                  //   final refPDF = FirebaseStorage.instance.ref().child(url);
-                  //   final bytes = await refPDF.getData();
-                  //   final filename = basename(url);
-                  //   final dir = await getApplicationDocumentsDirectory();
-                  //   final file = File('${dir.path}/$filename');
-                  //   await file.writeAsBytes(bytes!, flush: true);
-                  //   Navigator.of(context).push(
-                  //     MaterialPageRoute(
-                  //         builder: (context) => SignPdfPage(file: file)),
-                  //   );
-                  // },
                   number: _controller.documentstoSignLength,
                   title: "Documents to sign",
                   action: () async {

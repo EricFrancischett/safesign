@@ -6,9 +6,6 @@ class UserModel {
   String? firstName;
   String? lastName;
   String? pin;
-  List<dynamic>? documentsToSign;
-  List<dynamic>? pendingDocuments;
-  List<dynamic>? availableDocuments;
 
   UserModel({
     this.id,
@@ -16,9 +13,6 @@ class UserModel {
     this.firstName,
     this.lastName,
     this.pin,
-    this.availableDocuments,
-    this.pendingDocuments,
-    this.documentsToSign,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
@@ -28,9 +22,6 @@ class UserModel {
       lastName: map[UserModelKeys.lastName] ?? "",
       firstName: map[UserModelKeys.firstName] ?? "",
       pin: map[UserModelKeys.pin] ?? "",
-      documentsToSign: map[UserModelKeys.documentsToSign] ?? [],
-      pendingDocuments: map[UserModelKeys.pendingDocuments] ?? [],
-      availableDocuments: map[UserModelKeys.availableDocuments] ?? [],
     );
   }
 
@@ -41,9 +32,6 @@ class UserModel {
       UserModelKeys.lastName: user.lastName,
       UserModelKeys.firstName: user.firstName,
       UserModelKeys.pin: user.pin,
-      UserModelKeys.documentsToSign: user.documentsToSign,
-      UserModelKeys.availableDocuments: user.availableDocuments,
-      UserModelKeys.pendingDocuments: user.pendingDocuments,
     };
   }
 }
