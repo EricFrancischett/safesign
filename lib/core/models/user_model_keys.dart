@@ -6,6 +6,5 @@ class UserModelKeys {
   static const firstName = "first_name";
   static const token = "token";
   static const documentsToSign = "documents_to_sign";
-  static const pendingDocuments = "pending_documents";
   static const availableDocuments = "available_documents";
 }

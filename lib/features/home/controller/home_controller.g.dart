@@ -26,23 +26,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
-  late final _$pendingDocumentsLengthAtom = Atom(
-      name: '_HomeControllerBase.pendingDocumentsLength', context: context);
-
-  @override
-  int get pendingDocumentsLength {
-    _$pendingDocumentsLengthAtom.reportRead();
-    return super.pendingDocumentsLength;
-  }
-
-  @override
-  set pendingDocumentsLength(int value) {
-    _$pendingDocumentsLengthAtom
-        .reportWrite(value, super.pendingDocumentsLength, () {
-      super.pendingDocumentsLength = value;
-    });
-  }
-
   late final _$availableDocumentsLengthAtom = Atom(
       name: '_HomeControllerBase.availableDocumentsLength', context: context);
 
@@ -70,16 +53,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
         .run(() => super.getDocumentstoSignLength());
   }
 
-  late final _$getPendingDocumentsLengthAsyncAction = AsyncAction(
-      '_HomeControllerBase.getPendingDocumentsLength',
-      context: context);
-
-  @override
-  Future<void> getPendingDocumentsLength() {
-    return _$getPendingDocumentsLengthAsyncAction
-        .run(() => super.getPendingDocumentsLength());
-  }
-
   late final _$getAvailableDocumentsLengthAsyncAction = AsyncAction(
       '_HomeControllerBase.getAvailableDocumentsLength',
       context: context);
@@ -94,7 +67,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
   String toString() {
     return '''
 documentstoSignLength: ${documentstoSignLength},
-pendingDocumentsLength: ${pendingDocumentsLength},
 availableDocumentsLength: ${availableDocumentsLength}
     ''';
   }

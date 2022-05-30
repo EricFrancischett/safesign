@@ -9,6 +9,7 @@ import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
 import 'package:safesign_app/core/widgets/custom_button.dart';
 import 'package:safesign_app/features/home/controller/home_controller.dart';
+import 'package:safesign_app/features/sign_pdf/view/sign_pdf_page.dart';
 
 import '../controller/documents_list_controller.dart';
 
@@ -19,11 +20,6 @@ class DocumentsListPage extends StatefulWidget {
     Key? key,
     this.documentType = UserModelKeys.documentsToSign,
     this.titlePage = "Documents to sign",
-  }) : super(key: key);
-  const DocumentsListPage.pending({
-    this.titlePage = "Pending Documents",
-    this.documentType = UserModelKeys.pendingDocuments,
-    Key? key,
   }) : super(key: key);
   const DocumentsListPage.available({
     this.titlePage = "Available Documents",
@@ -74,9 +70,19 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
                 itemCount: _controller.generalDocmentsList.length,
                 itemBuilder: (context, index) {
                   return CustomButton(
-                    selectIcon: Icons.insert_drive_file_rounded,
-                      text: _controller.generalDocmentsList[index],
-                      onPressed: () {});
+                      selectIcon: Icons.insert_drive_file_rounded,
+                      text: _controller.generalDocmentsList[index].id!,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignPdfPage(
+                              currentDoc:
+                                  _controller.generalDocmentsList[index],
+                            ),
+                          ),
+                        );
+                      });
                 },
               );
             })
