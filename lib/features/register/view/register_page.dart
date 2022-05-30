@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mobx/mobx.dart';
 import 'package:safesign_app/core/generics/resource.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/theme/fonts_app.dart';
@@ -11,7 +8,6 @@ import 'package:safesign_app/core/widgets/main_buttom.dart';
 import 'package:safesign_app/core/widgets/main_textfield.dart';
 import 'package:safesign_app/core/widgets/return_button.dart';
 import 'package:safesign_app/features/home/view/home_page.dart';
-import 'package:safesign_app/features/login/view/login_page.dart';
 import 'package:safesign_app/features/login/view/widgets/custom_error_dialog.dart';
 import 'package:safesign_app/features/register/controller/register_controller.dart';
 

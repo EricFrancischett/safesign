@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mobx/mobx.dart';
-import 'package:safesign_app/features/upload/view/widgets/custom_inform_dialog.dart';
 import '../../../core/models/user_model.dart';
 part 'upload_controller.g.dart';
 
