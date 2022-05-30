@@ -7,7 +7,7 @@ class CustomTile extends StatelessWidget {
   final String title;
   final int number;
   final Function()? action;
-  const CustomTile({Key? key, required this.number, required this.title, this.action}) : super(key: key);
+  const CustomTile({Key? key, required this.number, required this.title,  this.action}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
