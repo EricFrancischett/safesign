@@ -1,12 +1,18 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mobx/mobx.dart';
-
+import 'package:safesign_app/features/upload/view/widgets/custom_inform_dialog.dart';
 import '../../../core/models/user_model.dart';
 part 'upload_controller.g.dart';
 
 class UploadController = _UploadControllerBase with _$UploadController;
 
 abstract class _UploadControllerBase with Store {
+  final user = FirebaseAuth.instance.currentUser!;
+
   @observable
   String documentName = '';
 
@@ -56,11 +62,61 @@ abstract class _UploadControllerBase with Store {
 
   @computed
   bool get areDocumentsInfoValid =>
-      isDocumentNameValid && isPeopleInvolvedValid;
+      isDocumentNameValid &&
+      isPeopleInvolvedValid &&
+      selectedFile.path.isNotEmpty;
 
   @observable
   bool isButtonAtLoadingStatus = false;
 
   @action
   void setButtonToLoadingStatus() => isButtonAtLoadingStatus = true;
+
+  @observable
+  File selectedFile = File("");
+
+  @action
+  Future<void> pickPdf() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+    if (result != null) {
+      selectedFile = File(result.files.single.path!);
+    } else {}
+  }
+
+  @action
+  Future<void> uploadPdf() async {
+    try {
+      String ref = "files/${user.uid}/$documentName.pdf";
+      await FirebaseStorage.instance.ref(ref).putFile(selectedFile);
+      final fileUrl =
+          await FirebaseStorage.instance.ref().child(ref).getDownloadURL();
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .collection("files")
+          .doc(documentName)
+          .set(
+        {
+          "url": fileUrl,
+          "_id": documentName,
+          "owner_id": user.uid,
+        },
+      );
+      for (var i = 0; i < selectedUserList.length; i++) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(selectedUserList[i].id)
+            .update({
+          "documents_to_sign": FieldValue.arrayUnion(
+            [documentName],
+          )
+        });
+      }
+    } on FirebaseException catch (e) {
+      throw Exception("Erro: $e");
+    }
+  }
 }
