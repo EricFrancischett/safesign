@@ -33,6 +33,7 @@ class CustomInforDialog extends StatelessWidget {
               children: [
                 Lottie.network(
                   'https://assets5.lottiefiles.com/packages/lf20_3bm41htq.json',
+                  repeat: false
                 ),
                 Text(
                   errorMessage,

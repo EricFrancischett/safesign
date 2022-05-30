@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
 import 'package:safesign_app/features/home/widgets/custom_drawer.dart';
@@ -19,14 +24,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = HomeController();
-
-  @override
-  void initState() {
-    _controller.getDocumentstoSignLength();
-    _controller.getPendingDocumentsLength();
-    _controller.getAvailableDocumentsLength();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +46,24 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(24.0),
         child: Observer(
           builder: (_) {
+            _controller.getDocumentstoSignLength();
+            _controller.getPendingDocumentsLength();
+            _controller.getAvailableDocumentsLength();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomTile(
+                    action: () async {
+                      const url =
+                          "files/Sh4LI9rHSmdQ19tkLXkv5jZkLE92/Nota Fiscal notebook.pdf";
+                      final refPDF = FirebaseStorage.instance.ref().child(url);
+                      final bytes = await refPDF.getData();
+                      final filename = basename(url);
+                      final dir = await getApplicationDocumentsDirectory();
+                      final file = File('${dir.path}/$filename');
+                      await file.writeAsBytes(bytes!, flush: true);
+                    },
                     number: _controller.documentstoSignLength,
                     title: "Documents to sign"),
                 const SizedBox(
