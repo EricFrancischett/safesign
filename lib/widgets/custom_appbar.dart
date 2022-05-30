@@ -14,6 +14,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+     
       centerTitle: false,
       backgroundColor: ColorsApp.appGrey,
       title: SizedBox(
@@ -22,6 +23,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           height: 100,
           width: 100,
         ),
+      
       ),
       actions: [
         IconButton(

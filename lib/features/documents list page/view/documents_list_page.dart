@@ -52,8 +52,6 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 48, 24, 48),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -72,9 +70,12 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
             ),
             Observer(builder: (_) {
               return ListView.builder(
+                shrinkWrap: true,
                 itemCount: _controller.generalDocmentsList.length,
-                itemBuilder: (context, index) {
-                  return CustomButton(text: "", onPressed: (){});
+                itemBuilder: (_, index) {
+                  return CustomButton(
+                      text: _controller.generalDocmentsList[index],
+                      onPressed: () {});
                 },
               );
             })
