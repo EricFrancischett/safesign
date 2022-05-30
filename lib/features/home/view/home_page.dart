@@ -60,39 +60,66 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomTile(
-                    action: () async {
-                      const url =
-                          "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf";
-                      final refPDF = FirebaseStorage.instance.ref().child(url);
-                      final bytes = await refPDF.getData();
-                      final filename = basename(url);
-                      final dir = await getApplicationDocumentsDirectory();
-                      final file = File('${dir.path}/$filename');
-                      await file.writeAsBytes(bytes!, flush: true);
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => SignPdfPage(file: file)),
-                      );
-                    },
-                    number: _controller.documentstoSignLength,
-                    title: "Documents to sign"),
+                  // action: () async {
+                  //   const url =
+                  //       "https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf";
+                  //   final refPDF = FirebaseStorage.instance.ref().child(url);
+                  //   final bytes = await refPDF.getData();
+                  //   final filename = basename(url);
+                  //   final dir = await getApplicationDocumentsDirectory();
+                  //   final file = File('${dir.path}/$filename');
+                  //   await file.writeAsBytes(bytes!, flush: true);
+                  //   Navigator.of(context).push(
+                  //     MaterialPageRoute(
+                  //         builder: (context) => SignPdfPage(file: file)),
+                  //   );
+                  // },
+                  number: _controller.documentstoSignLength,
+                  title: "Documents to sign",
+                  action: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DocumentsListPage.toSign(),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(
                   height: 16,
                 ),
                 CustomTile(
-                    number: _controller.pendingDocumentsLength,
-                    title: "Pending Documents"),
+                  number: _controller.pendingDocumentsLength,
+                  title: "Pending Documents",
+                  action: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DocumentsListPage.pending(),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(
                   height: 16,
                 ),
                 CustomTile(
-                    number: _controller.availableDocumentsLength,
-                    title: "Available Documents"),
+                  number: _controller.availableDocumentsLength,
+                  title: "Available Documents",
+                  action: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const DocumentsListPage.available(),
+                      ),
+                    );
+                  },
+                ),
               ],
             );
           },
         ),
-
       ),
     );
   }

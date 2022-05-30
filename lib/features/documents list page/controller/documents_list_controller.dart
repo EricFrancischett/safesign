@@ -30,19 +30,19 @@ abstract class _DocumentsListControllerBase with Store {
         .doc(user.uid)
         .get();
 
-    final doc = documentSnapshot.data()![documentType];
+    final doc = documentSnapshot.data()![documentType] as List;
 
     switch (documentType) {
       case UserModelKeys.documentsToSign:
-        documentsToSign = doc;
+        documentsToSign = doc.asObservable();
         generalDocmentsList = documentsToSign;
         break;
       case UserModelKeys.availableDocuments:
-        availableDocuments = doc;
+        availableDocuments = doc.asObservable();
         generalDocmentsList = availableDocuments;
         break;
       case UserModelKeys.pendingDocuments:
-        pendingDocuments = doc;
+        pendingDocuments = doc.asObservable();
         generalDocmentsList = pendingDocuments;
         break;
       default:

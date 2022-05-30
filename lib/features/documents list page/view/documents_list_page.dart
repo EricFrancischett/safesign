@@ -72,8 +72,9 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
               return ListView.builder(
                 shrinkWrap: true,
                 itemCount: _controller.generalDocmentsList.length,
-                itemBuilder: (_, index) {
+                itemBuilder: (context, index) {
                   return CustomButton(
+                    selectIcon: Icons.insert_drive_file_rounded,
                       text: _controller.generalDocmentsList[index],
                       onPressed: () {});
                 },

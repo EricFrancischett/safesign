@@ -42,7 +42,6 @@ class RegisterPage extends StatelessWidget {
                           child: Image.asset(
                             'image/NewLogoSafeSign.png',
                             height: 70,
-                            
                           ),
                         ),
                       ),
@@ -71,25 +70,29 @@ class RegisterPage extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Expanded(
-                                child: MainTextField(
-                                  onChanged: _controller.changeFirstName,
-                                  labelText: 'First Name',
-                                  choosedIcon: Icon(
-                                    Icons.account_circle_rounded,
-                                    color: ColorsApp.appBlue,
+                              Observer(builder: (_) {
+                                return Expanded(
+                                  child: MainTextField(
+                                    onChanged: _controller.changeFirstName,
+                                    labelText: 'First Name',
+                                    choosedIcon: Icon(
+                                      Icons.account_circle_rounded,
+                                      color: ColorsApp.appBlue,
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }),
                               const SizedBox(
                                 width: 10,
                               ),
-                              Expanded(
-                                child: MainTextField(
-                                  onChanged: _controller.changeLastName,
-                                  labelText: 'Last Name',
-                                ),
-                              ),
+                              Observer(builder: (_) {
+                                return Expanded(
+                                  child: MainTextField(
+                                    onChanged: _controller.changeLastName,
+                                    labelText: 'Last Name',
+                                  ),
+                                );
+                              }),
                             ],
                           ),
                           const SizedBox(
