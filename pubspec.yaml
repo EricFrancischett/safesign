@@ -54,6 +54,7 @@ dependencies:
   syncfusion_flutter_pdf: ^19.4.41-beta
   pdf: ^3.8.1
   pdf_merger: ^0.0.6
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:

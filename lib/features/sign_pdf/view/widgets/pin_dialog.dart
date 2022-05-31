@@ -7,8 +7,8 @@ import 'package:safesign_app/features/sign_pdf/controller/sign_pdf_controller.da
 import '../../../../core/theme/colors_app.dart';
 
 class PinDialog extends StatelessWidget {
-  PinDialog({Key? key}) : super(key: key);
-    final _controller = SignPdfController();
+  PinDialog({Key? key, required this.controller}) : super(key: key);
+    final SignPdfController controller;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -39,7 +39,7 @@ class PinDialog extends StatelessWidget {
                 Observer(builder: (_) {
                   return MainTextField(
                     keyboardType: TextInputType.number,
-                    onChanged: _controller.changePin,
+                    onChanged: controller.changePin,
                     labelText: 'Pin',
                     maxLength: 4,
                     choosedIcon: Icon(
@@ -53,9 +53,10 @@ class PinDialog extends StatelessWidget {
                 ),
                 Observer(builder: (_) {
                   return MainButtom(
-                    onPressed: _controller.isTypedPinValid
-                        ? () {
-                            _controller.signDocument();
+                    onPressed: controller.isTypedPinValid
+                        ? () async {
+                            await controller.signDocument();
+                            Navigator.pop(context);
                           }
                         : null,
                     child: Text(

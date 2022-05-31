@@ -89,9 +89,9 @@ abstract class _UploadControllerBase with Store {
   @action
   Future<void> uploadPdf() async {
     try {
-      List<String>? selectedIdUserList;
+      List<String> selectedIdUserList = [];
       for (var i = 0; i < selectedUserList.length; i++) {
-        selectedIdUserList?.add(selectedUserList[i].id!);
+        selectedIdUserList.add(selectedUserList[i].id!);
       }
       String ref = "files/${user.uid}/$documentName.pdf";
       await FirebaseStorage.instance.ref(ref).putFile(selectedFile);
@@ -107,7 +107,8 @@ abstract class _UploadControllerBase with Store {
           "url": fileUrl,
           "_id": documentName,
           "owner_id": user.uid,
-          "people_involved": FieldValue.arrayUnion([selectedIdUserList])
+          "people_involved": selectedIdUserList,
+          "pending_to_sign": selectedIdUserList,
         },
       );
       for (var i = 0; i < selectedUserList.length; i++) {

@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../../core/models/doc_model.dart';
 import '../../../core/theme/colors_app.dart';
 import '../../../core/theme/fonts_app.dart';
+import '../../upload/view/widgets/custom_inform_dialog.dart';
 
 class SignPdfPage extends StatefulWidget {
   final DocModel currentDoc;
@@ -23,7 +24,7 @@ class _MyWidgetState extends State<SignPdfPage> {
   @override
   void initState() {
     _controller.changeCurrentDoc(widget.currentDoc);
-    _controller.getCurrentPin;
+    _controller.getCurrentPin();
     super.initState();
   }
 
@@ -85,8 +86,30 @@ class _MyWidgetState extends State<SignPdfPage> {
                     await showDialog(
                       context: context,
                       builder: (context) {
-                        return PinDialog();
+                        return PinDialog(
+                          controller: _controller,
+                        );
                       },
+                    ).then(
+                      (value) => showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CustomInformDialog(
+                            lottieUrl:
+                                'https://assets5.lottiefiles.com/packages/lf20_3bm41htq.json',
+                            errorMessage: "Document Signed",
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                      )
+                          .then(
+                            (value) => Navigator.pop(context),
+                          )
+                          .then(
+                            (value) => Navigator.pop(context),
+                          ),
                     );
                   },
                 )

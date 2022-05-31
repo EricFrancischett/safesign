@@ -1,6 +1,7 @@
 import 'package:safesign_app/core/models/user_model_keys.dart';
+import 'package:equatable/equatable.dart';
 
-class UserModel {
+class UserModel extends Equatable {
   String? id;
   String? email;
   String? firstName;
@@ -34,4 +35,7 @@ class UserModel {
       UserModelKeys.pin: user.pin,
     };
   }
+
+  @override
+  List<Object?> get props => [id];
 }
