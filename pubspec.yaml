@@ -83,6 +83,7 @@ flutter:
   # assets:
   assets:
     - image/NewLogoSafeSign.png
+    - image/splashanimation.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

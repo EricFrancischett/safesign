@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
@@ -9,6 +11,26 @@ class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
   final user = FirebaseAuth.instance.currentUser!;
+  @observable
+  String firstName = '';
+
+  @observable
+  String lastName = '';
+
+  @observable
+  String userIdFireBase = 'teste';
+
+  @action
+  Future<void>getUserData() async {
+    var userId = user.uid;
+    final userCredential =
+        await FirebaseFirestore.instance.collection("users").doc(userId).get();
+
+    final currentUser = UserModel.fromMap(userCredential.data()!);
+    firstName = currentUser.firstName!;
+    lastName = currentUser.lastName!;
+    userIdFireBase = currentUser.id!;
+  }
 
   @observable
   int documentstoSignLength = 0;
