@@ -5,13 +5,14 @@ class DocModel {
   String? ownerId;
   String? url;
   List<dynamic>? peopleInvolved;
+  List<dynamic>? pendingToSign;
 
   DocModel({
     this.id,
     this.ownerId,
     this.url,
     this.peopleInvolved,
-
+    this.pendingToSign
   });
 
   factory DocModel.fromMap(Map<String, dynamic> map) {
@@ -20,6 +21,7 @@ class DocModel {
       ownerId: map[DocModelKeys.ownerId] ?? "",
       url: map[DocModelKeys.url] ?? "",
       peopleInvolved: map[DocModelKeys.peopleInvolved] ?? [],
+      pendingToSign: map[DocModelKeys.pendingToSign] ?? [],
     );
   }
 
@@ -29,6 +31,7 @@ class DocModel {
       DocModelKeys.ownerId: document.ownerId,
       DocModelKeys.url: document.url,
       DocModelKeys.peopleInvolved: document.peopleInvolved,
+      DocModelKeys.pendingToSign: document.pendingToSign,
     };
   }
 }

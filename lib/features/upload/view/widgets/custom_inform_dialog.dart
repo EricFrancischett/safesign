@@ -4,11 +4,12 @@ import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/main_buttom.dart';
 import '../../../../core/theme/colors_app.dart';
 
-class CustomInforDialog extends StatelessWidget {
+class CustomInformDialog extends StatelessWidget {
+  final String lottieUrl;
   final String errorMessage;
   final void Function() onPressed;
-  const CustomInforDialog(
-      {Key? key, required this.errorMessage, required this.onPressed})
+  const CustomInformDialog(
+      {Key? key, required this.errorMessage, required this.onPressed, required this.lottieUrl})
       : super(key: key);
 
   @override
@@ -26,13 +27,11 @@ class CustomInforDialog extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            // child: BackdropFilter(
-            //   filter: ImageFilter.blur(sigmaX: 5,sigmaY: 5),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Lottie.network(
-                  'https://assets5.lottiefiles.com/packages/lf20_3bm41htq.json',
+                  lottieUrl,
                   repeat: false
                 ),
                 Text(

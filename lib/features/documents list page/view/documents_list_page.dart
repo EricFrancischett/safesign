@@ -10,7 +10,7 @@ import 'package:safesign_app/core/widgets/custom_appbar.dart';
 import 'package:safesign_app/core/widgets/custom_button.dart';
 import 'package:safesign_app/features/home/controller/home_controller.dart';
 import 'package:safesign_app/features/sign_pdf/view/sign_pdf_page.dart';
-
+import '../../document_status/view/document_status_page.dart';
 import '../controller/documents_list_controller.dart';
 
 class DocumentsListPage extends StatefulWidget {
@@ -46,7 +46,7 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
       backgroundColor: ColorsApp.appDarkGrey,
       appBar: const CustomAppBar(),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 48, 24, 48),
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
         child: Column(
           children: [
             Row(
@@ -64,28 +64,53 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
             const SizedBox(
               height: 20,
             ),
-            Observer(builder: (_) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: _controller.generalDocmentsList.length,
-                itemBuilder: (context, index) {
-                  return CustomButton(
-                      selectIcon: Icons.insert_drive_file_rounded,
-                      text: _controller.generalDocmentsList[index].id!,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignPdfPage(
-                              currentDoc:
-                                  _controller.generalDocmentsList[index],
-                            ),
-                          ),
-                        );
-                      });
-                },
-              );
-            })
+            Observer(
+              builder: (_) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _controller.generalDocmentsList.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        CustomButton(
+                          selectIcon: Icons.insert_drive_file_rounded,
+                          text: _controller.generalDocmentsList[index].id!,
+                          onPressed: () {
+                            switch (widget.documentType) {
+                              case UserModelKeys.documentsToSign:
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignPdfPage(
+                                      currentDoc: _controller
+                                          .generalDocmentsList[index],
+                                    ),
+                                  ),
+                                );
+                                break;
+                              case UserModelKeys.availableDocuments:
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DocumentStatusPage(
+                                                                            currentDoc: _controller
+                                          .generalDocmentsList[index],
+                                    ),
+                                  ),
+                                );
+                                break;
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        )
+                      ],
+                    );
+                  },
+                );
+              },
+            )
           ],
         ),
       ),

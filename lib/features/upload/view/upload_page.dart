@@ -214,7 +214,10 @@ class _UploadPageState extends State<UploadPage> {
                           await showDialog(
                               context: context,
                               builder: (context) {
-                                return CustomInforDialog(
+                                return CustomInformDialog(
+                                    lottieUrl:
+                                        'https://assets7.lottiefiles.com/packages/lf20_dkihbxmq.json',
+                                    // lottieUrl: 'https://assets5.lottiefiles.com/packages/lf20_3bm41htq.json',
                                     errorMessage: "Upload Succesful",
                                     onPressed: () {
                                       Navigator.pop(context);

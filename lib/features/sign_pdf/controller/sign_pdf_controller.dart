@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:safesign_app/core/models/doc_model.dart';
+import 'package:safesign_app/core/models/doc_model_keys.dart';
 import 'package:safesign_app/core/models/user_model_keys.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
@@ -67,6 +68,14 @@ abstract class _SignPdfControllerBase with Store {
     final File finalFile = outputFile;
     String firebaseRef = "files/${currentDoc.ownerId}/${currentDoc.id}.pdf";
     await FirebaseStorage.instance.ref(firebaseRef).putFile(finalFile);
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(currentDoc.ownerId)
+        .collection("files")
+        .doc(currentDoc.id)
+        .update({
+      DocModelKeys.pendingToSign: FieldValue.arrayRemove([user.uid])
+    });
     await FirebaseFirestore.instance
         .collection("users")
         .doc(user.uid)
