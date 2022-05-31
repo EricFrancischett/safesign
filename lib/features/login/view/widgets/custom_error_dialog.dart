@@ -52,7 +52,6 @@ class CustomErrorDialog extends StatelessWidget {
           ),
         ),
       ),
-      // ),
     );
   }
 }
