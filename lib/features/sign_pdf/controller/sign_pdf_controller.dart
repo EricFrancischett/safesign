@@ -3,11 +3,14 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:safesign_app/core/models/doc_model.dart';
 import 'package:safesign_app/core/models/user_model_keys.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+
+import '../../../core/models/user_model.dart';
 part 'sign_pdf_controller.g.dart';
 
 class SignPdfController = _SignPdfControllerBase with _$SignPdfController;
@@ -20,6 +23,31 @@ abstract class _SignPdfControllerBase with Store {
 
   @action
   void changeCurrentDoc(DocModel newValue) => currentDoc = newValue;
+
+  @observable
+  String pin = "";
+
+  @action
+  void changePin(String newValue) => pin = newValue;
+
+  @computed
+  bool get isIdValid => pin.isNotEmpty && pin.length == 4;
+
+  @observable
+  String currentPin = "";
+
+  @computed
+  bool get isTypedPinValid => pin == currentPin;
+
+  @action
+  Future<void> getCurrentPin() async {
+    final document = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.uid)
+        .get();
+    final currentUser = UserModel.fromMap(document.data()!);
+    currentPin = currentUser.pin!;
+  }
 
   @action
   Future<void> signDocument() async {
