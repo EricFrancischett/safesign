@@ -32,6 +32,13 @@ class _HomePageState extends State<HomePage> {
   final _controller = HomeController();
 
   @override
+  void initState() {
+    _controller.getUserData();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Fabio(onPressed: () async {
@@ -43,10 +50,12 @@ class _HomePageState extends State<HomePage> {
         );
       }),
       backgroundColor: ColorsApp.appDarkGrey,
-      endDrawer: CustomDrawer(
-          firstName: widget.user.firstName!,
-          lastName: widget.user.lastName!,
-          id: "1988069"),
+      endDrawer: Observer(builder: (_) {
+        return CustomDrawer(
+            firstName: _controller.firstName,
+            lastName: _controller.lastName,
+            id: _controller.userIdFireBase);
+      }),
       appBar: const CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
