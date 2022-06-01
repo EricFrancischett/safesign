@@ -126,11 +126,24 @@ class RegisterPage extends StatelessWidget {
                           Observer(builder: (_) {
                             return MainTextField(
                               onChanged: _controller.changePassword,
+                              suffixIcon: IconButton(
+                                icon: _controller.isPasswordVisible
+                                    ? Icon(
+                                        Icons.visibility,
+                                        color: ColorsApp.appBlue,
+                                      )
+                                    : Icon(
+                                        Icons.visibility_off,
+                                        color: ColorsApp.appBlue,
+                                      ),
+                                onPressed: _controller.changePasswordVisibility,
+                              ),
                               labelText: 'Password',
                               choosedIcon: Icon(
                                 Icons.lock_rounded,
                                 color: ColorsApp.appBlue,
                               ),
+                              isObscure: !_controller.isPasswordVisible,
                             );
                           }),
                           const SizedBox(
@@ -139,17 +152,40 @@ class RegisterPage extends StatelessWidget {
                           Observer(builder: (_) {
                             return MainTextField(
                               onChanged: _controller.changePasswordConfirmation,
+                              suffixIcon: IconButton(
+                                  icon: _controller.isPasswordVisible
+                                      ? Icon(
+                                          Icons.visibility,
+                                          color: ColorsApp.appBlue,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off,
+                                          color: ColorsApp.appBlue,
+                                        ),
+                                  onPressed:
+                                      _controller.changePasswordVisibility),
                               labelText: 'Confirm Password',
                               choosedIcon: Icon(
                                 Icons.lock_rounded,
                                 color: ColorsApp.appBlue,
                               ),
+                              isObscure: !_controller.isPasswordVisible,
                             );
                           }),
                           const SizedBox(
                             height: 16,
                           ),
-                        ],
+                          MainTextField(
+                            onChanged: _controller.changePhoneNumber,
+                            labelText: 'Phone Number',
+                            choosedIcon: Icon(
+                              Icons.mail_rounded,
+                              color: ColorsApp.appBlue,
+                            ),
+                            suffixIcon: IconButton(icon: Icon(Icons.phone), onPressed: _controller.verifyNumber,
+                          )
+                          ),
+                          ],
                       ),
                       Observer(builder: (_) {
                         bool isLoading = _controller.isButtonAtLoadingStatus;

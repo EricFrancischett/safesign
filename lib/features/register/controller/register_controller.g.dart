@@ -140,6 +140,22 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     });
   }
 
+  late final _$isPasswordVisibleAtom =
+      Atom(name: '_RegisterControllerBase.isPasswordVisible', context: context);
+
+  @override
+  bool get isPasswordVisible {
+    _$isPasswordVisibleAtom.reportRead();
+    return super.isPasswordVisible;
+  }
+
+  @override
+  set isPasswordVisible(bool value) {
+    _$isPasswordVisibleAtom.reportWrite(value, super.isPasswordVisible, () {
+      super.isPasswordVisible = value;
+    });
+  }
+
   late final _$passwordConfirmationAtom = Atom(
       name: '_RegisterControllerBase.passwordConfirmation', context: context);
 
@@ -242,6 +258,17 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   }
 
   @override
+  void changePasswordVisibility() {
+    final _$actionInfo = _$_RegisterControllerBaseActionController.startAction(
+        name: '_RegisterControllerBase.changePasswordVisibility');
+    try {
+      return super.changePasswordVisibility();
+    } finally {
+      _$_RegisterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void changePasswordConfirmation(String newValue) {
     final _$actionInfo = _$_RegisterControllerBaseActionController.startAction(
         name: '_RegisterControllerBase.changePasswordConfirmation');
@@ -271,6 +298,7 @@ lastName: ${lastName},
 pin: ${pin},
 email: ${email},
 password: ${password},
+isPasswordVisible: ${isPasswordVisible},
 passwordConfirmation: ${passwordConfirmation},
 isButtonAtLoadingStatus: ${isButtonAtLoadingStatus},
 isFirstNameValid: ${isFirstNameValid},
