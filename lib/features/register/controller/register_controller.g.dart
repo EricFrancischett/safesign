@@ -232,14 +232,6 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     return _$registerUserAsyncAction.run(() => super.registerUser());
   }
 
-  late final _$verifyNumberAsyncAction =
-      AsyncAction('_RegisterControllerBase.verifyNumber', context: context);
-
-  @override
-  Future<void> verifyNumber() {
-    return _$verifyNumberAsyncAction.run(() => super.verifyNumber());
-  }
-
   late final _$_RegisterControllerBaseActionController =
       ActionController(name: '_RegisterControllerBase', context: context);
 

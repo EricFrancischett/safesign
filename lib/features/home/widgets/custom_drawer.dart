@@ -5,6 +5,8 @@ import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/features/login/view/login_page.dart';
 
+import '../../upload/view/widgets/custom_inform_dialog.dart';
+
 class CustomDrawer extends StatelessWidget {
   final String firstName;
   final String lastName;
@@ -61,24 +63,35 @@ class CustomDrawer extends StatelessWidget {
                     ],
                   ),
                   InkWell(
-                    child: Text(
-                      "Logout",
-                      style: FontsApp.mainFontText16.copyWith(
-                        color: ColorsApp.appRed,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    onTap: () async {
-                      await FirebaseAuth.instance.signOut();
-                      await Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
+                      child: Text(
+                        "Logout",
+                        style: FontsApp.mainFontText16.copyWith(
+                          color: ColorsApp.appRed,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CustomInformDialog(
+                              lottieUrl: 'image/logoutanimation.json',
+                              errorMessage: "Really want to Logout?",
+                              onPressed: () async {
+                                await FirebaseAuth.instance.signOut();
+                                await Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      }
+                      ),
                 ],
               ),
             ),
