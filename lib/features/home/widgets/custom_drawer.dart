@@ -1,7 +1,9 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/theme/fonts_app.dart';
+import 'package:safesign_app/features/login/view/login_page.dart';
 
 class CustomDrawer extends StatelessWidget {
   final String firstName;
@@ -67,8 +69,14 @@ class CustomDrawer extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    onTap: () {
-                      //Navigate to LoginPage
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      await Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
                     },
                   ),
                 ],

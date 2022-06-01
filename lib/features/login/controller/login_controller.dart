@@ -46,10 +46,13 @@ abstract class _LoginControllerBase with Store {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-          final document = await FirebaseFirestore.instance.collection("users").doc(credential.user!.uid).get();
-          final currentUser = UserModel.fromMap(document.data()!);
-          await _hive.put("id", currentUser.id!);
-          return Resource.success(data: currentUser);
+      final document = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(credential.user!.uid)
+          .get();
+      final currentUser = UserModel.fromMap(document.data()!);
+      await _hive.put("id", currentUser.id!);
+      return Resource.success(data: currentUser);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return Resource.failed(error: 'No user found for that email.');
@@ -67,4 +70,6 @@ abstract class _LoginControllerBase with Store {
 
   @computed
   bool get isPasswordValid => password.length >= 6 && password.length <= 12;
+
+
 }

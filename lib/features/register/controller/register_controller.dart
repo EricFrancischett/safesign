@@ -48,6 +48,12 @@ abstract class _RegisterControllerBase with Store {
   @action
   void changePassword(String newValue) => password = newValue;
 
+  @observable
+  bool isPasswordVisible = false;
+
+  @action
+  void changePasswordVisibility() => isPasswordVisible = !isPasswordVisible;
+
   @computed
   bool get isPasswordValid => password.length >= 6 && password.length <= 12;
 
@@ -94,7 +100,7 @@ abstract class _RegisterControllerBase with Store {
           .doc(credential.user!.uid)
           .get();
       final currentUser = UserModel.fromMap(document.data()!);
-      
+
       return Resource.success(data: currentUser);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -106,5 +112,39 @@ abstract class _RegisterControllerBase with Store {
         return Resource.failed(error: "Error, try again");
       }
     }
+  }
+
+  @observable
+  String userPhoneNumber = '';
+
+  @observable
+  String verificationIdReceived = '';
+
+  @action
+  void changePhoneNumber(String newNumber) => userPhoneNumber = newNumber;
+
+
+  @action
+  void verifyNumber() async {
+    
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.verifyPhoneNumber(
+      phoneNumber: userPhoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        
+        await auth.signInWithCredential(credential).then((value) {
+          print("You are logged in Successfuly");
+        });
+      },
+      verificationFailed: (FirebaseException exception) {
+        if (exception.code == 'invalid-phone-number') ;
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        verificationIdReceived = verificationId;
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+
+      },
+    );
   }
 }
