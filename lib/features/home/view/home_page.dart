@@ -52,9 +52,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: ColorsApp.appDarkGrey,
       endDrawer: Observer(builder: (_) {
         return CustomDrawer(
-            firstName: _controller.firstName,
-            lastName: _controller.lastName,
-            id: _controller.userIdFireBase);
+          firstName: _controller.firstName,
+          lastName: _controller.lastName,
+        );
       }),
       appBar: const CustomAppBar(),
       body: Padding(

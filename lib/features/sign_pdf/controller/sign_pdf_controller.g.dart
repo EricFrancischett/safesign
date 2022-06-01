@@ -80,6 +80,14 @@ mixin _$SignPdfController on _SignPdfControllerBase, Store {
     return _$getCurrentPinAsyncAction.run(() => super.getCurrentPin());
   }
 
+  late final _$readImageDataAsyncAction =
+      AsyncAction('_SignPdfControllerBase.readImageData', context: context);
+
+  @override
+  Future<Uint8List> readImageData(String name) {
+    return _$readImageDataAsyncAction.run(() => super.readImageData(name));
+  }
+
   late final _$signDocumentAsyncAction =
       AsyncAction('_SignPdfControllerBase.signDocument', context: context);
 

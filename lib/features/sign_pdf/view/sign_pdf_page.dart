@@ -96,7 +96,7 @@ class _MyWidgetState extends State<SignPdfPage> {
                         builder: (context) {
                           return CustomInformDialog(
                             lottieUrl:
-                                'https://assets5.lottiefiles.com/packages/lf20_3bm41htq.json',
+                                'image/signdocumentanimation.json',
                             errorMessage: "Document Signed",
                             onPressed: () {
                               Navigator.pop(context);

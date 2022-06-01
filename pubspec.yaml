@@ -86,6 +86,11 @@ flutter:
     - image/NewLogoSafeSign.png
     - image/splashanimation.json
     - image/logoSplash.png
+    - image/documentloadanimation.json
+    - image/signdocumentanimation.json
+    - image/loadinganimation.json
+    - image/certificationimage.png
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
