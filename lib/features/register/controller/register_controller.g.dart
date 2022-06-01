@@ -191,12 +191,53 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     });
   }
 
+  late final _$userPhoneNumberAtom =
+      Atom(name: '_RegisterControllerBase.userPhoneNumber', context: context);
+
+  @override
+  String get userPhoneNumber {
+    _$userPhoneNumberAtom.reportRead();
+    return super.userPhoneNumber;
+  }
+
+  @override
+  set userPhoneNumber(String value) {
+    _$userPhoneNumberAtom.reportWrite(value, super.userPhoneNumber, () {
+      super.userPhoneNumber = value;
+    });
+  }
+
+  late final _$verificationIdReceivedAtom = Atom(
+      name: '_RegisterControllerBase.verificationIdReceived', context: context);
+
+  @override
+  String get verificationIdReceived {
+    _$verificationIdReceivedAtom.reportRead();
+    return super.verificationIdReceived;
+  }
+
+  @override
+  set verificationIdReceived(String value) {
+    _$verificationIdReceivedAtom
+        .reportWrite(value, super.verificationIdReceived, () {
+      super.verificationIdReceived = value;
+    });
+  }
+
   late final _$registerUserAsyncAction =
       AsyncAction('_RegisterControllerBase.registerUser', context: context);
 
   @override
   Future<Resource<UserModel, String>> registerUser() {
     return _$registerUserAsyncAction.run(() => super.registerUser());
+  }
+
+  late final _$verifyNumberAsyncAction =
+      AsyncAction('_RegisterControllerBase.verifyNumber', context: context);
+
+  @override
+  Future verifyNumber() {
+    return _$verifyNumberAsyncAction.run(() => super.verifyNumber());
   }
 
   late final _$_RegisterControllerBaseActionController =
@@ -291,6 +332,17 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
   }
 
   @override
+  void changePhoneNumber(String newNumber) {
+    final _$actionInfo = _$_RegisterControllerBaseActionController.startAction(
+        name: '_RegisterControllerBase.changePhoneNumber');
+    try {
+      return super.changePhoneNumber(newNumber);
+    } finally {
+      _$_RegisterControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 firstName: ${firstName},
@@ -301,6 +353,8 @@ password: ${password},
 isPasswordVisible: ${isPasswordVisible},
 passwordConfirmation: ${passwordConfirmation},
 isButtonAtLoadingStatus: ${isButtonAtLoadingStatus},
+userPhoneNumber: ${userPhoneNumber},
+verificationIdReceived: ${verificationIdReceived},
 isFirstNameValid: ${isFirstNameValid},
 isFirstLastValid: ${isFirstLastValid},
 isIdValid: ${isIdValid},

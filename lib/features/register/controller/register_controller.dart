@@ -118,20 +118,17 @@ abstract class _RegisterControllerBase with Store {
   String userPhoneNumber = '';
 
   @observable
-  String verificationIdReceived = '';
+  String verificationIdReceived = '1234';
 
   @action
   void changePhoneNumber(String newNumber) => userPhoneNumber = newNumber;
 
-
   @action
-  void verifyNumber() async {
-    
+  verifyNumber() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.verifyPhoneNumber(
       phoneNumber: userPhoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
-        
         await auth.signInWithCredential(credential).then((value) {
           print("You are logged in Successfuly");
         });
@@ -139,12 +136,12 @@ abstract class _RegisterControllerBase with Store {
       verificationFailed: (FirebaseException exception) {
         if (exception.code == 'invalid-phone-number') ;
       },
-      codeSent: (String verificationId, int? resendToken) {
-        verificationIdReceived = verificationId;
+      codeSent: (String verificationId, int? resendToken) async {
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: verificationIdReceived);
+            await auth.signInWithCredential(credential);
       },
-      codeAutoRetrievalTimeout: (String verificationId) {
-
-      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
 }

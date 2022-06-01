@@ -175,17 +175,21 @@ class RegisterPage extends StatelessWidget {
                           const SizedBox(
                             height: 16,
                           ),
-                          MainTextField(
-                            onChanged: _controller.changePhoneNumber,
-                            labelText: 'Phone Number',
-                            choosedIcon: Icon(
-                              Icons.mail_rounded,
-                              color: ColorsApp.appBlue,
-                            ),
-                            suffixIcon: IconButton(icon: Icon(Icons.phone), onPressed: _controller.verifyNumber,
-                          )
-                          ),
-                          ],
+                          Observer(builder: (_) {
+                            return MainTextField(
+                              keyboardType: TextInputType.phone,
+                                onChanged: _controller.changePhoneNumber,
+                                labelText: 'Phone Number',
+                                choosedIcon: Icon(
+                                  Icons.mail_rounded,
+                                  color: ColorsApp.appBlue,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(Icons.phone),
+                                  onPressed: _controller.verifyNumber,
+                                ));
+                          })
+                        ],
                       ),
                       Observer(builder: (_) {
                         bool isLoading = _controller.isButtonAtLoadingStatus;
