@@ -125,13 +125,12 @@ abstract class _RegisterControllerBase with Store {
 
 
   @action
-  void verifyNumber() async {
+  Future<void> verifyNumber() async {
     
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.verifyPhoneNumber(
       phoneNumber: userPhoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
-        
         await auth.signInWithCredential(credential).then((value) {
           print("You are logged in Successfuly");
         });

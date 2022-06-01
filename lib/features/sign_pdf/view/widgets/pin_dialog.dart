@@ -5,10 +5,11 @@ import 'package:safesign_app/core/widgets/main_buttom.dart';
 import 'package:safesign_app/core/widgets/main_textfield.dart';
 import 'package:safesign_app/features/sign_pdf/controller/sign_pdf_controller.dart';
 import '../../../../core/theme/colors_app.dart';
+import '../../../upload/view/widgets/custom_inform_dialog.dart';
 
 class PinDialog extends StatelessWidget {
   PinDialog({Key? key, required this.controller}) : super(key: key);
-    final SignPdfController controller;
+  final SignPdfController controller;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -38,6 +39,7 @@ class PinDialog extends StatelessWidget {
                 ),
                 Observer(builder: (_) {
                   return MainTextField(
+                    isObscure: true,
                     keyboardType: TextInputType.number,
                     onChanged: controller.changePin,
                     labelText: 'Pin',
@@ -57,6 +59,20 @@ class PinDialog extends StatelessWidget {
                         ? () async {
                             await controller.signDocument();
                             Navigator.pop(context);
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CustomInformDialog(
+                                  lottieUrl: 'image/signdocumentanimation.json',
+                                  errorMessage: "Document Signed",
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              },
+                            );
                           }
                         : null,
                     child: Text(
