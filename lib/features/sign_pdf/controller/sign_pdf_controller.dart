@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,6 @@ import 'package:safesign_app/core/models/doc_model.dart';
 import 'package:safesign_app/core/models/doc_model_keys.dart';
 import 'package:safesign_app/core/models/user_model_keys.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
-
 import '../../../core/models/user_model.dart';
 part 'sign_pdf_controller.g.dart';
 
@@ -51,6 +52,12 @@ abstract class _SignPdfControllerBase with Store {
   }
 
   @action
+  Future<Uint8List> readImageData(String name) async {
+    final data = await rootBundle.load("image/$name");
+    return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  }
+
+  @action
   Future<void> signDocument() async {
     Reference ref = await FirebaseStorage.instance
         .ref('files/${currentDoc.ownerId}/${currentDoc.id}.pdf');
@@ -58,11 +65,26 @@ abstract class _SignPdfControllerBase with Store {
     final file = File('${dir.path}/${ref.name}.pdf');
     await ref.writeToFile(file);
     final PdfDocument document = PdfDocument(
-        inputBytes: File('${dir.path}/${ref.name}.pdf').readAsBytesSync());
-    document.pages.add().graphics.drawString(
-        'Document Signed!', PdfStandardFont(PdfFontFamily.helvetica, 12),
-        brush: PdfSolidBrush(PdfColor(0, 0, 0)),
-        bounds: const Rect.fromLTWH(0, 0, 150, 20));
+      inputBytes: File('${dir.path}/${ref.name}.pdf').readAsBytesSync(),
+    );
+    final PdfPage page = document.pages.add();
+    page.graphics.drawString(
+          'Document signed through SafeSign® in ${DateTime.now()}.',
+          PdfStandardFont(PdfFontFamily.helvetica, 12),
+          brush: PdfSolidBrush(
+            PdfColor(0, 0, 0),
+          ),
+          bounds: const Rect.fromLTWH(0, 0, 500, 20),
+        );
+            page.graphics.drawString(
+          'Certification Number: ${user.uid}${DateTime.now().toString()}.',
+          PdfStandardFont(PdfFontFamily.helvetica, 12),
+          brush: PdfSolidBrush(
+            PdfColor(0, 0, 0),
+          ),
+          bounds: const Rect.fromLTWH(0, 30, 500, 20),
+        );
+    page.graphics.drawImage(PdfBitmap(await readImageData("certificationimage.png")), const Rect.fromLTWH(0, 80, 300, 80));
     final outputFile = await file.writeAsBytes(document.save());
     document.dispose();
     final File finalFile = outputFile;

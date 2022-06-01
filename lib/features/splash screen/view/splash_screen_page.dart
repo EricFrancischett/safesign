@@ -28,14 +28,14 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
           _controller.checkIfUserIsLoggedIn(context);
           return Stack(
             children: [
+              Lottie.asset("image/splashanimation.json"),
               Hero(
                 tag: "logo",
-                child: Lottie.asset("image/splashanimation.json"),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("image/logoSplash.png"),
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("image/logoSplash.png"),
+                    ),
                   ),
                 ),
               ),

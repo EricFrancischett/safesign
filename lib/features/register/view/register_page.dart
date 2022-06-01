@@ -186,8 +186,8 @@ class RegisterPage extends StatelessWidget {
                                 }
                               : null,
                           child: isLoading
-                              ? Lottie.network(
-                                  'https://assets2.lottiefiles.com/packages/lf20_2tvot70g.json',
+                              ? Lottie.asset(
+                                  'image/loadinganimation.json',
                                   height: 64,
                                   width: 64,
                                   alignment: Alignment.center,

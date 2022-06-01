@@ -45,73 +45,77 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
       appBar: const CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    widget.titlePage,
-                    style: FontsApp.mainFontTitle32SemiBold
-                        .copyWith(color: ColorsApp.appLightGrey),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      widget.titlePage,
+                      style: FontsApp.mainFontTitle32SemiBold
+                          .copyWith(color: ColorsApp.appLightGrey),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Observer(
-              builder: (_) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: _controller.generalDocmentsList.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        CustomButton(
-                          selectIcon: Icons.insert_drive_file_rounded,
-                          text: _controller.generalDocmentsList[index].id!,
-                          onPressed: () {
-                            switch (widget.documentType) {
-                              case UserModelKeys.documentsToSign:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignPdfPage(
-                                      currentDoc: _controller
-                                          .generalDocmentsList[index],
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Observer(
+                builder: (_) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _controller.generalDocmentsList.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomButton(
+                            selectIcon: Icons.insert_drive_file_rounded,
+                            text: _controller.generalDocmentsList[index].id!,
+                            onPressed: () {
+                              switch (widget.documentType) {
+                                case UserModelKeys.documentsToSign:
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SignPdfPage(
+                                        currentDoc: _controller
+                                            .generalDocmentsList[index],
+                                      ),
                                     ),
-                                  ),
-                                );
-                                break;
-                              case UserModelKeys.availableDocuments:
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DocumentStatusPage(
-                                                                            currentDoc: _controller
-                                          .generalDocmentsList[index],
+                                  );
+                                  break;
+                                case UserModelKeys.availableDocuments:
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DocumentStatusPage(
+                                                                              currentDoc: _controller
+                                            .generalDocmentsList[index],
+                                      ),
                                     ),
-                                  ),
-                                );
-                                break;
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          height: 16,
-                        )
-                      ],
-                    );
-                  },
-                );
-              },
-            )
-          ],
+                                  );
+                                  break;
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 16,
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -216,8 +216,7 @@ class _UploadPageState extends State<UploadPage> {
                               builder: (context) {
                                 return CustomInformDialog(
                                     lottieUrl:
-                                        'https://assets7.lottiefiles.com/packages/lf20_dkihbxmq.json',
-                                    // lottieUrl: 'https://assets5.lottiefiles.com/packages/lf20_3bm41htq.json',
+                                        'image/documentloadanimation.json',
                                     errorMessage: "Upload Succesful",
                                     onPressed: () {
                                       Navigator.pop(context);
@@ -231,8 +230,8 @@ class _UploadPageState extends State<UploadPage> {
                         }
                       : null,
                   child: isLoading
-                      ? Lottie.network(
-                          'https://assets2.lottiefiles.com/packages/lf20_2tvot70g.json',
+                      ? Lottie.asset(
+                          'image/loadinganimation.json',
                           height: 64,
                           width: 64,
                           alignment: Alignment.center,

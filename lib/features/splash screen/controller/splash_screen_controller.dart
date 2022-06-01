@@ -12,6 +12,8 @@ class SplashScreenController {
     UserModel uid = UserModel();
 
     FirebaseAuth.instance.authStateChanges().listen((User? currentUser) {
+
+      
       if (currentUser != null) {
         uid.id = currentUser.uid;
         Navigator.push(

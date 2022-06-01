@@ -6,13 +6,11 @@ import 'package:safesign_app/core/theme/fonts_app.dart';
 class CustomDrawer extends StatelessWidget {
   final String firstName;
   final String lastName;
-  final String id;
-  const CustomDrawer(
-      {Key? key,
-      required this.firstName,
-      required this.lastName,
-      required this.id})
-      : super(key: key);
+  const CustomDrawer({
+    Key? key,
+    required this.firstName,
+    required this.lastName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class CustomDrawer extends StatelessWidget {
             color: ColorsApp.appDarkGrey.withOpacity(0.5),
           ),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5,sigmaY: 5),
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: Padding(
               padding: const EdgeInsets.all(40.0),
               child: Column(
@@ -55,27 +53,8 @@ class CustomDrawer extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      Text(
-                        "id: $id",
-                        style: FontsApp.mainFontText20.copyWith(
-                          color: ColorsApp.appLightGrey,
-                        ),
-                      ),
                       const SizedBox(
                         height: 8,
-                      ),
-                      InkWell(
-                        child: Text(
-                          "Change Credentials",
-                          style: FontsApp.mainFontText16.copyWith(
-                            color: ColorsApp.appBlue,
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        onTap: () {
-                          //Navigate to ChangeCredentialsPage
-                        },
                       ),
                     ],
                   ),

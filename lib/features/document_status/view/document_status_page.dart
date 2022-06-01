@@ -34,7 +34,6 @@ class _DocumentStatusPageState extends State<DocumentStatusPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
-      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16),
@@ -156,7 +155,7 @@ class _DocumentStatusPageState extends State<DocumentStatusPage> {
                                     builder: (context) {
                                       return CustomInformDialog(
                                         lottieUrl:
-                                            'https://assets7.lottiefiles.com/packages/lf20_dkihbxmq.json',
+                                            'image/documentloadanimation.json',
                                         errorMessage: "File downloaded!",
                                         onPressed: () {
                                           Navigator.pop(context);

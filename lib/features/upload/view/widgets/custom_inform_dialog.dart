@@ -30,7 +30,7 @@ class CustomInformDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Lottie.network(
+                Lottie.asset(
                   lottieUrl,
                   repeat: false
                 ),
