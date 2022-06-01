@@ -44,12 +44,16 @@ abstract class _UploadControllerBase with Store {
 
   @action
   void addUserToSelectedList(UserModel selectedUserModel) {
-    selectedUserList.add(selectedUserModel);
+    if (!selectedUserList.contains(selectedUserModel)) {
+      selectedUserList.add(selectedUserModel);
+    }
   }
 
   @action
   void removeUserFromSelectedList(UserModel selectedUserModel) {
-    selectedUserList.remove(selectedUserModel);
+    if (selectedUserList.contains(selectedUserModel)) {
+      selectedUserList.remove(selectedUserModel);
+    }
   }
 
   @computed

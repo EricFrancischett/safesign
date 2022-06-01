@@ -90,26 +90,6 @@ class _MyWidgetState extends State<SignPdfPage> {
                           controller: _controller,
                         );
                       },
-                    ).then(
-                      (value) => showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomInformDialog(
-                            lottieUrl:
-                                'image/signdocumentanimation.json',
-                            errorMessage: "Document Signed",
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                      )
-                          .then(
-                            (value) => Navigator.pop(context),
-                          )
-                          .then(
-                            (value) => Navigator.pop(context),
-                          ),
                     );
                   },
                 )

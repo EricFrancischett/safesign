@@ -8,6 +8,7 @@ import 'package:safesign_app/core/theme/colors_app.dart';
 import 'package:safesign_app/core/theme/fonts_app.dart';
 import 'package:safesign_app/core/widgets/custom_appbar.dart';
 import 'package:safesign_app/core/widgets/custom_button.dart';
+import 'package:safesign_app/core/widgets/return_button.dart';
 import 'package:safesign_app/features/home/controller/home_controller.dart';
 import 'package:safesign_app/features/sign_pdf/view/sign_pdf_page.dart';
 import '../../document_status/view/document_status_page.dart';
@@ -44,22 +45,30 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsApp.appDarkGrey,
-      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Text(
-                      widget.titlePage,
-                      style: FontsApp.mainFontTitle32SemiBold
-                          .copyWith(color: ColorsApp.appLightGrey),
-                    ),
+                  ReturnButton(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          widget.titlePage,
+                          style: FontsApp.mainFontTitle32SemiBold
+                              .copyWith(color: ColorsApp.appLightGrey),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -96,7 +105,7 @@ class _DocumentsListPageState extends State<DocumentsListPage> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => DocumentStatusPage(
-                                                                              currentDoc: _controller
+                                        currentDoc: _controller
                                             .generalDocmentsList[index],
                                       ),
                                     ),
