@@ -4,6 +4,7 @@ class UserModelKeys {
   static const pin = "pin";
   static const lastName = "last_name";
   static const firstName = "first_name";
+  static const phoneNumber = "phone_number";
   static const token = "token";
   static const documentsToSign = "documents_to_sign";
   static const availableDocuments = "available_documents";

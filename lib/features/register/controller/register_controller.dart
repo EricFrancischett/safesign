@@ -94,6 +94,7 @@ abstract class _RegisterControllerBase with Store {
         UserModelKeys.firstName: firstName,
         UserModelKeys.lastName: lastName,
         UserModelKeys.pin: pin,
+        UserModelKeys.phoneNumber: phoneNumber,
       });
       final document = await FirebaseFirestore.instance
           .collection("users")
@@ -124,26 +125,26 @@ abstract class _RegisterControllerBase with Store {
   void changePhoneNumber(String newNumber) => userPhoneNumber = newNumber;
 
 
-  // @action
-  // Future<void> verifyNumber() async {
+  @action
+  Future<void> verifyNumber() async {
     
-  //   FirebaseAuth auth = FirebaseAuth.instance;
-  //   await auth.verifyPhoneNumber(
-  //     phoneNumber: userPhoneNumber,
-  //     verificationCompleted: (PhoneAuthCredential credential) async {
-  //       await auth.signInWithCredential(credential).then((value) {
-  //         print("You are logged in Successfuly");
-  //       });
-  //     },
-  //     verificationFailed: (FirebaseException exception) {
-  //       if (exception.code == 'invalid-phone-number') ;
-  //     },
-  //     codeSent: (String verificationId, int? resendToken) {
-  //       verificationIdReceived = verificationId;
-  //     },
-  //     codeAutoRetrievalTimeout: (String verificationId) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.verifyPhoneNumber(
+      phoneNumber: userPhoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await auth.signInWithCredential(credential).then((value) {
+          print("You are logged in Successfuly");
+        });
+      },
+      verificationFailed: (FirebaseException exception) {
+        if (exception.code == 'invalid-phone-number') ;
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        verificationIdReceived = verificationId;
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
 
-  //     },
-  //   );
-  // }
+      },
+    );
+  }
 }

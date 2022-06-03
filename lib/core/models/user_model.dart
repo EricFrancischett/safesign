@@ -7,6 +7,7 @@ class UserModel extends Equatable {
   String? firstName;
   String? lastName;
   String? pin;
+  String? phoneNumber;
 
   UserModel({
     this.id,
@@ -14,6 +15,7 @@ class UserModel extends Equatable {
     this.firstName,
     this.lastName,
     this.pin,
+    this.phoneNumber,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
@@ -23,6 +25,7 @@ class UserModel extends Equatable {
       lastName: map[UserModelKeys.lastName] ?? "",
       firstName: map[UserModelKeys.firstName] ?? "",
       pin: map[UserModelKeys.pin] ?? "",
+      phoneNumber: map[UserModelKeys.phoneNumber] ?? "",
     );
   }
 
